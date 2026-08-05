@@ -32,22 +32,7 @@
     );
   }
 
-  /* ---------- 3. 邮箱订阅（前端 feedback） ---------- */
-  const subForm = document.getElementById('subscribeForm');
-  const subMsg = document.getElementById('subMsg');
-  if (subForm) {
-    subForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (subMsg) {
-        subMsg.style.opacity = '1';
-        setTimeout(() => (subMsg.style.opacity = '0'), 4000);
-      }
-      subForm.querySelector('input').value = '';
-      return false;
-    });
-  }
-
-  /* ---------- 4. 角色 Tab 切换 ---------- */
+  /* ---------- 3. 角色 Tab 切换 ---------- */
   const charData = [
     {
       name: '林知意',
@@ -133,7 +118,7 @@
     }
   }
 
-  /* ---------- 5. 下载提取码一键复制 ---------- */
+  /* ---------- 4. 下载提取码一键复制 ---------- */
   const copyBtn = document.getElementById('copyCodeBtn');
   const copyTip = document.getElementById('copyTip');
   if (copyBtn) {
@@ -166,7 +151,7 @@
     });
   }
 
-  /* ---------- 6. 浮动花瓣（动态生成，18 片更丰富的樱花） ---------- */
+  /* ---------- 5. 浮动花瓣（动态生成，18 片更丰富的樱花） ---------- */
   const petalLayer = document.getElementById('petalLayer');
   if (petalLayer) {
     const colors = [
