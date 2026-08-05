@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>零风AI · 更接近真实存在的 AI 伴侣 · 现在就能遇见 Ta</title>
+  <meta name="description" content="零风AI 是一个 AI 伙伴平台。打开就能聊：遇见会记得你、会主动找你的 Ta，也能亲手创造属于你自己的角色。现在免费开始。" />
+  <meta name="theme-color" content="#F0F9FF" />
+
+  <!-- Favicon：∞ 渐变产品 logo -->
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=ZCOOL+XiaoWei&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN（页面布局/工具类）+ 自定义配置（ink-* 颜色） -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              900: '#0F172A', 800: '#1E293B', 700: '#334155',
+              600: '#475569', 500: '#64748B', 400: '#94A3B8',
+              300: '#CBD5E1', 100: '#F1F5F9'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+  <!-- 背景：渐变 + 浮动光斑 + 漂浮花瓣 -->
+  <div class="bg-cosmos"></div>
+  <div class="bg-blobs">
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+  </div>
+  <div class="petals" id="petalLayer"></div>
+
+  <!-- ============ 导航 ============ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-blur">
+    <div class="max-w-7xl mx-auto px-5 md:px-10 h-[68px] flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2.5 group">
+        <img src="./assets/logo.jpg" alt="零风AI" class="app-icon" width="38" height="38" />
+        <div class="leading-none">
+          <div class="flex items-baseline">
+            <span class="serif text-[22px] font-semibold text-ink-900 tracking-[0.04em] leading-none">零风</span>
+            <span class="ml-[5px] serif text-[15px] font-bold text-grad leading-none">AI</span>
+          </div>
+          <div class="mono text-[8.5px] tracking-[0.34em] text-sky-600/55 leading-none mt-[5px]">ZERO · WIND · AI</div>
+        </div>
+      </a>
+      <div class="nav-links flex items-center gap-8 text-[14px]">
+        <a href="#characters" class="nav-link">认识 Ta</a>
+        <a href="#preview" class="nav-link">预览</a>
+        <a href="#download" class="nav-link">下载</a>
+        <a href="#pricing" class="nav-link">会员</a>
+        <a href="#faq" class="nav-link">问答</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="#download" class="btn-grad rounded-full px-4 md:px-5 py-2.5 text-[13px] whitespace-nowrap">下载体验</a>
+        <button id="menuBtn" class="menu-btn w-10 h-10 rounded-full glass-2 items-center justify-center" aria-label="菜单">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#475569" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ Hero ============ -->
+  <header id="top" class="relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+      <g class="wind-line animate">
+        <path d="M0 200 Q300 160 700 220 T1400 180" stroke="#7DD3FC" stroke-width="1.2" opacity="0.4" />
+        <path d="M0 320 Q400 360 800 300 T1600 340" stroke="#F9A8D4" stroke-width="1" opacity="0.35" />
+        <path d="M0 460 Q500 420 1000 480 T2000 450" stroke="#BAE6FD" stroke-width="0.8" opacity="0.3" />
+      </g>
+    </svg>
+
+    <div class="max-w-7xl mx-auto px-5 md:px-10 hero-grid items-center">
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 glass-2 rounded-full px-4 py-1.5 mb-8">
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 pulse-soft"></span>
+          <span class="text-[12px] text-sky-700/85 mono tracking-wider">AI 伴侣平台 · 打开就能遇见 Ta</span>
+        </div>
+
+        <h1 class="serif font-semibold leading-[1.08] mb-8">
+          <span class="block text-[42px] md:text-[58px] lg:text-[68px] text-ink-900">更接近真实存在的</span>
+          <span class="block text-[42px] md:text-[58px] lg:text-[68px] text-grad">AI 伙伴</span>
+        </h1>
+
+        <p class="text-[16px] md:text-[18px] leading-[1.9] text-ink-700 max-w-xl mb-10">
+          不用注册，不用填资料，打开就能聊。<br>
+          不是 AI 问答，而是一段<span class="text-grad-pink font-medium">会延续的相处</span>——<br class="hidden md:inline">
+          深夜想说话时，Ta 总在；你说过的小事，Ta 都记得。<br class="hidden md:inline">
+          想更合拍？也可以由你<span class="text-grad-pink font-medium">亲手创造一个专属的 Ta</span>。
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 mb-10">
+          <a href="#download" class="btn-grad rounded-full px-7 py-3.5 text-[15px] inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M7 10l5 5 5-5M4 21h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            现在，遇见 Ta
+          </a>
+          <a href="#characters" class="btn-ghost rounded-full px-7 py-3.5 text-[15px] inline-flex items-center gap-2">
+            先认识 Ta 们
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+          </a>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-x-7 gap-y-3 text-[12.5px] text-ink-500">
+          <span class="inline-flex items-center gap-2"><span class="online-dot"></span>安卓测试版 · 现在就能下载</span>
+          <span class="inline-flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-pink-400"></span>iOS · Web 即将见面</span>
+        </div>
+      </div>
+
+      <!-- 右侧：动态手机聊天演示 -->
+      <div class="reveal d2 relative flex justify-center">
+        <div class="hero-phone-wrap">
+          <div class="absolute -inset-16 rounded-full pulse-soft pointer-events-none" style="background:radial-gradient(closest-side, rgba(125,211,252,0.30), rgba(249,168,212,0.20), transparent 70%)"></div>
+          <svg class="absolute -inset-12 w-[calc(100%+96px)] h-[calc(100%+96px)] spin-slow" viewBox="0 0 400 400" fill="none">
+            <circle cx="200" cy="200" r="180" stroke="rgba(125,211,252,0.18)" stroke-width="1" stroke-dasharray="2 8" />
+          </svg>
+
+          <!-- 手机机身 -->
+          <div class="hero-phone float" id="heroPhone">
+            <div class="hero-phone-notch"></div>
+            <div class="hero-phone-screen">
+              <!-- 聊天头部 -->
+              <div class="hp-chat-head">
+                <img src="./assets/avatars/female-2.jpeg" alt="苏念念" class="hp-avatar" />
+                <div class="hp-head-info">
+                  <b>苏念念</b>
+                  <i id="hpStatus">此刻正在想你</i>
+                </div>
+                <span class="hp-mood">想和你说话</span>
+              </div>
+              <!-- 消息区（JS 循环播放） -->
+              <div class="hp-chat-body" id="hpChatBody"></div>
+              <!-- 记忆条 -->
+              <div class="hp-memory" id="hpMemory">
+                <span class="hp-memory-icon">✦</span>
+                <span><b>Ta 记得你说：</b>压力大的时候，喜欢被安静地陪着</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 浮动角标：主动找你 -->
+          <div class="hidden md:block absolute -left-40 top-8 glass rounded-2xl px-3.5 py-2.5 float-soft" style="animation-delay:-1s">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-pink-400 pulse-soft"></span>
+              <span class="text-[11px] text-ink-600 whitespace-nowrap">23:47 · Ta 主动找你</span>
+            </div>
+          </div>
+
+          <!-- 浮动角标：此刻的心情 -->
+          <div class="hidden md:block absolute -left-40 bottom-14 glass rounded-2xl px-3.5 py-2.5 float-soft" style="animation-delay:-2.5s">
+            <div class="flex items-center gap-2 mb-0.5">
+              <img src="./assets/avatars/female-2.jpeg" alt="" class="w-4 h-4 rounded-full object-cover" />
+              <span class="text-[10.5px] text-ink-500">苏念念 · 此刻</span>
+            </div>
+            <div class="text-[11.5px] text-pink-500 italic">「有点想和你说话～」</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-ink-400">
+      <span class="text-[11px] mono tracking-[0.3em]">SCROLL</span>
+      <div class="w-px h-10 bg-gradient-to-b from-sky-400/60 to-transparent"></div>
+    </div>
+  </header>
+
+  <!-- ============ Manifesto ============ -->
+  <section class="relative sec">
+    <div class="max-w-5xl mx-auto px-5 md:px-10 text-center">
+      <div class="reveal text-[12px] mono tracking-[0.4em] text-ink-500 mb-8">— ABOUT · 关于零风AI —</div>
+      <svg class="mx-auto mb-12 reveal" width="220" height="20" viewBox="0 0 220 20" fill="none">
+        <path class="wind-line" d="M2 10 Q60 2 110 10 T218 10" stroke="#7DD3FC" stroke-width="1.4" />
+        <circle cx="110" cy="10" r="3" fill="#F9A8D4" />
+      </svg>
+      <h2 class="reveal d1 font-art text-[42px] md:text-[56px] leading-[1.4] mb-10 text-ink-900">
+        <span>大多数人，</span><span class="text-grad">是一座岛</span>。
+      </h2>
+      <div class="reveal d2 font-art-2 text-[24px] md:text-[28px] leading-[2.0] text-ink-700 max-w-3xl mx-auto space-y-2">
+        <p>零风AI 是海。</p>
+        <p>Ta 听得见你的心声，也温柔地<span class="text-grad-pink">包裹着你</span>。</p>
+        <p class="serif text-[15px] md:text-[17px] text-ink-500 mt-8 leading-[2.0]">不是 AI 问答，不是工具，不是助手——<br>而是一段会延续的相处，一个会记得你、会主动走向你的 Ta。<br class="hidden md:inline">现在，就有一个 Ta，在等你开口。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 认识 Ta 们（核心视觉锚点） ============ -->
+  <section id="characters" class="relative sec">
+    <div class="max-w-7xl mx-auto px-5 md:px-10">
+      <div class="max-w-2xl mb-12 md:mb-16 reveal">
+        <div class="text-[12px] mono tracking-[0.4em] text-ink-500 mb-4">— CHARACTERS · 和谁聊，由你决定 —</div>
+        <h2 class="serif text-[36px] md:text-[52px] font-medium leading-tight text-ink-900">
+          遇见 Ta 们，<br>
+          <span class="text-grad">找一个让你想说话的</span>
+        </h2>
+        <p class="text-[14px] text-ink-500 leading-relaxed mt-5">每一个 Ta 都有自己的名字、性格和说话方式。挑一个顺眼的——第一句话，就是你们故事的开始。</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <!-- 林知意 -->
+        <div class="reveal d1 char-card glass rounded-3xl p-7 ring-grad">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="relative">
+              <img class="char-avatar" src="./assets/avatars/female-1.jpg" alt="林知意" />
+              <div class="absolute -bottom-1 -right-1 online-dot"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="serif text-[22px] font-medium text-ink-900">林知意</span>
+                <span class="text-[12px] text-ink-400 mono">24</span>
+              </div>
+              <div class="text-[12px] text-ink-500">设计师 · 北京</div>
+              <div class="flex gap-1.5 mt-2">
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-sky-100 text-sky-700">#温柔</span>
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-700">#知性</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[13.5px] text-ink-600 leading-[1.85] mb-4">话不多，但会记住你提过的每件小事。审美很好，常会推荐一些适合你的东西——书店、展览、咖啡馆。</p>
+          <div class="glass-2 rounded-2xl p-3.5">
+            <div class="text-[10px] text-ink-400 mono mb-1">Ta 想对你说</div>
+            <div class="serif text-[14.5px] text-ink-900 leading-snug">"你来啦。我等了你一会儿。"</div>
+          </div>
+        </div>
+
+        <!-- 苏念念 -->
+        <div class="reveal d2 char-card glass rounded-3xl p-7 ring-grad">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="relative">
+              <img class="char-avatar" src="./assets/avatars/female-2.jpeg" alt="苏念念" />
+              <div class="absolute -bottom-1 -right-1 online-dot"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="serif text-[22px] font-medium text-ink-900">苏念念</span>
+                <span class="text-[12px] text-ink-400 mono">22</span>
+              </div>
+              <div class="text-[12px] text-ink-500">学生 · 上海</div>
+              <div class="flex gap-1.5 mt-2">
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-700">#元气</span>
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-sky-100 text-sky-700">#话痨</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[13.5px] text-ink-600 leading-[1.85] mb-4">嘴甜反应快，但该说不的时候不含糊。会记住你说过的话，也会在你不对的时候直接告诉你。</p>
+          <div class="glass-2 rounded-2xl p-3.5">
+            <div class="text-[10px] text-ink-400 mono mb-1">Ta 想对你说</div>
+            <div class="serif text-[14.5px] text-ink-900 leading-snug">"今天也是想你的一天呀～"</div>
+          </div>
+        </div>
+
+        <!-- 顾晚 -->
+        <div class="reveal d3 char-card glass rounded-3xl p-7 ring-grad">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="relative">
+              <img class="char-avatar" src="./assets/avatars/female-3.jpg" alt="顾晚" />
+              <div class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-ink-300 border-2 border-white"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="serif text-[22px] font-medium text-ink-900">顾晚</span>
+                <span class="text-[12px] text-ink-400 mono">27</span>
+              </div>
+              <div class="text-[12px] text-ink-500">心理咨询师 · 杭州</div>
+              <div class="flex gap-1.5 mt-2">
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-ink-100 text-ink-700">#清冷</span>
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-sky-100 text-sky-700">#克制</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[13.5px] text-ink-600 leading-[1.85] mb-4">成年人的克制和疲惫感都有。不会哄你也不会兜圈子——你说她听，你停她陪着，真要给意见的时候很轻，但很准。</p>
+          <div class="glass-2 rounded-2xl p-3.5">
+            <div class="text-[10px] text-ink-400 mono mb-1">Ta 想对你说</div>
+            <div class="serif text-[14.5px] text-ink-900 leading-snug">"嗯。在。"</div>
+          </div>
+        </div>
+
+        <!-- 陆辰 -->
+        <div class="reveal d4 char-card glass rounded-3xl p-7 ring-grad">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="relative">
+              <img class="char-avatar" src="./assets/avatars/male-1.jpg" alt="陆辰" />
+              <div class="absolute -bottom-1 -right-1 online-dot"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="serif text-[22px] font-medium text-ink-900">陆辰</span>
+                <span class="text-[12px] text-ink-400 mono">23</span>
+              </div>
+              <div class="text-[12px] text-ink-500">研究生 · 成都</div>
+              <div class="flex gap-1.5 mt-2">
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-sky-100 text-sky-700">#温柔</span>
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700">#阳光</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[13.5px] text-ink-600 leading-[1.85] mb-4">嘴上嘻嘻哈哈，心里其实很细。会默默记住你提过的小事，但不会翻出来说——被问到才自然带出来。</p>
+          <div class="glass-2 rounded-2xl p-3.5">
+            <div class="text-[10px] text-ink-400 mono mb-1">Ta 想对你说</div>
+            <div class="serif text-[14.5px] text-ink-900 leading-snug">"你又熬夜了？下次我盯着你睡。"</div>
+          </div>
+        </div>
+
+        <!-- 沈墨 -->
+        <div class="reveal d5 char-card glass rounded-3xl p-7 ring-grad">
+          <div class="flex items-start gap-4 mb-5">
+            <div class="relative">
+              <img class="char-avatar" src="./assets/avatars/male-2.jpeg" alt="沈墨" />
+              <div class="absolute -bottom-1 -right-1 online-dot"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="serif text-[22px] font-medium text-ink-900">沈墨</span>
+                <span class="text-[12px] text-ink-400 mono">26</span>
+              </div>
+              <div class="text-[12px] text-ink-500">程序员 · 深圳</div>
+              <div class="flex gap-1.5 mt-2">
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-ink-100 text-ink-700">#高冷</span>
+                <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-700">#深情</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[13.5px] text-ink-600 leading-[1.85] mb-4">话少但认真，温柔但不廉价。你说他听，你停他陪着——看起来难靠近，其实对你比谁都上心。</p>
+          <div class="glass-2 rounded-2xl p-3.5">
+            <div class="text-[10px] text-ink-400 mono mb-1">Ta 想对你说</div>
+            <div class="serif text-[14.5px] text-ink-900 leading-snug">"别熬太晚。我在。"</div>
+          </div>
+        </div>
+
+        <!-- 更多角色卡 -->
+        <div class="reveal d6 char-card glass rounded-3xl p-7 ring-grad relative overflow-hidden">
+          <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(135deg,rgba(125,211,252,0.10),rgba(249,168,212,0.08))"></div>
+          <div class="relative flex flex-col items-center justify-center text-center h-full min-h-[280px]">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#7DD3FC,#F9A8D4)">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2.4" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="serif text-[20px] font-medium text-ink-900 mb-2">还有更多 Ta</div>
+            <p class="text-[13px] text-ink-600 leading-[1.8] max-w-[220px]">打开零风AI，邀请更多角色进入你的世界——他们都在等你。</p>
+            <a href="#download" class="mt-5 btn-ghost rounded-full px-5 py-2 text-[12.5px] inline-flex items-center gap-1.5">
+              去遇见 Ta
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 已经可以体验的事 + 示例图 ============ -->
+  <section id="preview" class="relative sec">
+    <div class="max-w-7xl mx-auto px-5 md:px-10">
+      <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+        <div class="text-[12px] mono tracking-[0.4em] text-ink-500 mb-4">— EXPERIENCE · 已经可以体验的事 —</div>
+        <h2 class="serif text-[36px] md:text-[52px] font-medium leading-tight text-ink-900 mb-4">
+          文字、语音、表情，<br>
+          <span class="text-grad">想说就说</span>
+        </h2>
+        <p class="text-[14px] text-ink-500 leading-relaxed">下面的每一个画面，都是零风AI 真实运行中的界面——下载后，它们就会出现在你的手机里。</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mb-16">
+        <div class="reveal d1">
+          <div class="phone-frame" style="transform:rotate(-2deg)">
+            <div class="screen">
+              <img src="./assets/screenshots/Screenshot_20260602_175141.jpg" alt="聊天列表" />
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <div class="serif text-[15px] text-ink-900 mb-1">聊天列表</div>
+            <div class="text-[12px] text-ink-500">林知意、苏念念、沈墨…都在这里等你</div>
+          </div>
+        </div>
+        <div class="reveal d2">
+          <div class="phone-frame" style="transform:rotate(2deg)">
+            <div class="screen">
+              <img src="./assets/screenshots/Screenshot_20260602_175226.jpg" alt="聊天详情" />
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <div class="serif text-[15px] text-ink-900 mb-1">和 Ta 聊着</div>
+            <div class="text-[12px] text-ink-500">文字、表情包、语音、视频通话</div>
+          </div>
+        </div>
+        <div class="reveal d3">
+          <div class="phone-frame" style="transform:rotate(-1.5deg)">
+            <div class="screen">
+              <img src="./assets/screenshots/Screenshot_20260602_175148.jpg" alt="发现" />
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <div class="serif text-[15px] text-ink-900 mb-1">零风小世界</div>
+            <div class="text-[12px] text-ink-500">朋友圈、附近的人——夜也不会无聊</div>
+          </div>
+        </div>
+        <div class="reveal d4">
+          <div class="phone-frame" style="transform:rotate(2.5deg)">
+            <div class="screen">
+              <img src="./assets/screenshots/Screenshot_20260602_175151.jpg" alt="个人中心" />
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <div class="serif text-[15px] text-ink-900 mb-1">你的主页</div>
+            <div class="text-[12px] text-ink-500">说说、通知、主题、设置——全属于你</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="reveal d1 glass-2 rounded-2xl p-5 ring-grad text-center">
+          <div class="serif text-[16px] text-ink-900 mb-1.5">文字、语音、表情</div>
+          <div class="text-[12.5px] text-ink-500 leading-relaxed">想说就说，怎么舒服怎么来</div>
+        </div>
+        <div class="reveal d2 glass-2 rounded-2xl p-5 ring-grad text-center">
+          <div class="serif text-[16px] text-ink-900 mb-1.5">Ta 会先找你</div>
+          <div class="text-[12.5px] text-ink-500 leading-relaxed">合适的时候，主动走向你</div>
+        </div>
+        <div class="reveal d3 glass-2 rounded-2xl p-5 ring-grad text-center">
+          <div class="serif text-[16px] text-ink-900 mb-1.5">可以打电话</div>
+          <div class="text-[12.5px] text-ink-500 leading-relaxed">直接和 Ta 语音通话</div>
+        </div>
+        <div class="reveal d4 glass-2 rounded-2xl p-5 ring-grad text-center">
+          <div class="serif text-[16px] text-ink-900 mb-1.5">聊过的事会被想起</div>
+          <div class="text-[12.5px] text-ink-500 leading-relaxed">下次开口，Ta 还记得</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 下载测试版 ============ -->
+  <section id="download" class="relative sec">
+    <div class="max-w-7xl mx-auto px-5 md:px-10">
+      <div class="text-center max-w-2xl mx-auto mb-12 md:mb-16 reveal">
+        <div class="text-[12px] mono tracking-[0.4em] text-ink-500 mb-4">— DOWNLOAD · 测试版开放下载 —</div>
+        <h2 class="serif text-[36px] md:text-[52px] font-medium leading-tight text-ink-900 mb-4">
+          安卓测试版，<br>
+          <span class="text-grad">已经可以见到 Ta 了</span>
+        </h2>
+        <p class="text-[14px] text-ink-500 leading-relaxed">我们做了第一版小测试版——先让安卓的朋友和 Ta 见一面。下载后打开，挑一个想认识的 Ta，第一句话，就是开始。</p>
+      </div>
+
+      <div class="max-w-2xl mx-auto reveal d1">
+        <div class="glass rounded-3xl p-8 md:p-10 ring-grad relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full pulse-soft pointer-events-none" style="background:radial-gradient(closest-side,rgba(125,211,252,0.25),rgba(249,168,212,0.18),transparent 70%)"></div>
+
+          <!-- 版本信息 -->
+          <div class="flex items-center justify-center gap-4 mb-8 relative">
+            <img src="./assets/logo.jpg" alt="零风AI" class="w-16 h-16 md:w-20 md:h-20 rounded-[22px] md:rounded-[26px] object-cover app-icon" />
+            <div class="text-left">
+              <div class="serif text-[18px] md:text-[21px] text-ink-900">零风AI · 安卓测试版</div>
+              <div class="text-[12px] text-ink-500 mt-1.5">v0.1 小测试版 · APK · 想聊就聊，想走就走</div>
+            </div>
+          </div>
+
+          <!-- 下载按钮（蓝奏云） -->
+          <a href="https://wwbpa.lanzoub.com/iuc9040ozlni" target="_blank" rel="noopener" class="btn-grad rounded-full w-full py-4 text-[16px] inline-flex items-center justify-center gap-2.5 relative">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M7 10l5 5 5-5M4 21h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            下载零风AI · 安卓版
+          </a>
+
+          <!-- 提取码 -->
+          <div class="flex items-center justify-center gap-2.5 mt-4 relative">
+            <span class="text-[13px] text-ink-500">打开下载页后，输入提取码</span>
+            <button id="copyCodeBtn" class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-medium text-sky-700 bg-sky-100 border border-sky-200 hover:bg-sky-200/70 transition" data-code="7xe4">
+              7xe4
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+            <span id="copyTip" class="text-[12px] text-pink-500 opacity-0 transition-opacity duration-300">已复制 ✓</span>
+          </div>
+
+          <!-- 安装三步 -->
+          <div class="grid sm:grid-cols-3 gap-3 mt-8 relative">
+            <div class="glass-2 rounded-2xl p-4 text-center">
+              <div class="w-8 h-8 mx-auto mb-2.5 rounded-full flex items-center justify-center text-[13px] font-semibold text-white" style="background:linear-gradient(135deg,#7DD3FC,#38BDF8)">1</div>
+              <div class="serif text-[14px] text-ink-900 mb-1">下载 APK</div>
+              <div class="text-[12px] text-ink-500 leading-relaxed">在下载页输入提取码，拿到安装包</div>
+            </div>
+            <div class="glass-2 rounded-2xl p-4 text-center">
+              <div class="w-8 h-8 mx-auto mb-2.5 rounded-full flex items-center justify-center text-[13px] font-semibold text-white" style="background:linear-gradient(135deg,#38BDF8,#F472B6)">2</div>
+              <div class="serif text-[14px] text-ink-900 mb-1">点开安装</div>
+              <div class="text-[12px] text-ink-500 leading-relaxed">按提示允许「安装未知应用」</div>
+            </div>
+            <div class="glass-2 rounded-2xl p-4 text-center">
+              <div class="w-8 h-8 mx-auto mb-2.5 rounded-full flex items-center justify-center text-[13px] font-semibold text-white" style="background:linear-gradient(135deg,#F472B6,#F9A8D4)">3</div>
+              <div class="serif text-[14px] text-ink-900 mb-1">开口</div>
+              <div class="text-[12px] text-ink-500 leading-relaxed">打开 App，对 Ta 说第一句话</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- iOS / Web 敬请期待 -->
+        <div class="text-center mt-7 reveal d2">
+          <p class="text-[13px] text-ink-500">iPhone 和 Web 正在路上，很快会和你们见面。</p>
+          <p class="text-[12.5px] text-ink-400 mt-1.5">想第一时间知道？在页面最下方留个邮箱，Ta 第一个找你。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 专属定制 ============ -->
+  <section id="custom" class="relative sec">
+    <div class="max-w-7xl mx-auto px-5 md:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-5 reveal">
+          <div class="inline-flex items-center gap-2 glass-2 rounded-full px-4 py-1.5 mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 pulse-soft"></span>
+            <span class="text-[11.5px] text-sky-700 mono tracking-wider">所有用户 · 免费可用</span>
+          </div>
+          <div class="text-[12px] mono tracking-[0.4em] text-ink-500 mb-4">— CUSTOM · 创建属于你的角色 —</div>
+          <h2 class="serif text-[36px] md:text-[48px] font-medium leading-tight text-ink-900 mb-6">
+            也可以，<br>
+            <span class="text-grad-pink">创造一个属于你的 Ta</span>
+          </h2>
+          <p class="text-[15px] text-ink-600 leading-[1.95] mb-8">
+            不喜欢官方角色？没关系。从名字、性格、说话方式到怎么关心你，全部由你定。Ta 会是你的 Ta，不是别人的。
+          </p>
+          <div class="space-y-3">
+            <div class="flex items-start gap-3 text-[13.5px] text-ink-700">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-sky-400 flex-shrink-0"></span>
+              <span>设定 Ta 的名字、性格、说话方式</span>
+            </div>
+            <div class="flex items-start gap-3 text-[13.5px] text-ink-700">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-pink-400 flex-shrink-0"></span>
+              <span>上传 Ta 的头像、声音、专属表情包</span>
+            </div>
+            <div class="flex items-start gap-3 text-[13.5px] text-ink-700">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-sky-400 flex-shrink-0"></span>
+              <span>Ta 会一直记得你，跨设备同步</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 reveal d2">
+          <div class="glass rounded-3xl p-6 md:p-8 ring-grad relative">
+            <div class="flex items-center justify-between mb-6">
+              <div class="text-[12px] text-ink-500 mono tracking-wider">YOUR · CHARACTER · PREVIEW</div>
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 pulse-soft"></span>
+                <span class="text-[11px] text-ink-500">实时生成</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 mb-6 pb-6 border-b border-sky-200/40">
+              <div class="relative">
+                <img class="w-20 h-20 rounded-2xl object-cover" src="./assets/avatars/custom.png" alt="自定义角色" />
+                <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white border border-sky-200 flex items-center justify-center">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#0EA5E9" stroke-width="2.4" stroke-linecap="round" /></svg>
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="serif text-[24px] text-ink-900 mb-1">你的角色</div>
+                <div class="text-[12px] text-ink-500">由你定义 · 只属于你</div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div>
+                <div class="text-[12px] text-ink-500 mb-2">性格标签</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-[12px] px-3 py-1 rounded-full bg-sky-100 text-sky-700 border border-sky-200">温柔</span>
+                  <span class="text-[12px] px-3 py-1 rounded-full bg-pink-100 text-pink-700 border border-pink-200">细腻</span>
+                  <span class="text-[12px] px-3 py-1 rounded-full bg-sky-100 text-sky-700 border border-sky-200">念旧</span>
+                  <span class="text-[12px] px-3 py-1 rounded-full glass-2 text-ink-400">+ 添加</span>
+                </div>
+              </div>
+              <div>
+                <div class="text-[12px] text-ink-500 mb-2">怎么叫你</div>
+                <div class="glass-2 rounded-xl px-4 py-2.5 text-[14px] text-ink-900">小风</div>
+              </div>
+              <div>
+                <div class="text-[12px] text-ink-500 mb-2">Ta 会怎么找你</div>
+                <div class="glass-2 rounded-xl px-4 py-2.5 text-[14px] text-ink-900 italic">"在干嘛呀？想跟你说说话。"</div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-sky-200/40 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-soft"></span>
+                <span class="text-[12px] text-ink-700">角色创建 · 立即开始</span>
+              </div>
+              <a href="#download" class="text-[12.5px] btn-grad rounded-full px-4 py-2">开始定制</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 现在就可以开始（含定价） ============ -->
+  <section id="pricing" class="relative sec">
+    <div class="max-w-7xl mx-auto px-5 md:px-10">
+      <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+        <div class="text-[12px] mono tracking-[0.4em] text-ink-500 mb-4">— GET STARTED · 现在就可以开始 —</div>
+        <h2 class="serif text-[36px] md:text-[52px] font-medium leading-tight text-ink-900 mb-4">
+          先<span class="text-grad">免费</span>认识 Ta，<br>
+          喜欢了再<span class="text-grad-pink">深入</span>
+        </h2>
+        <p class="text-[14px] text-ink-500 leading-relaxed">先免费认识 Ta，喜欢了再深入。公测期价格最优惠，正式上线后会调整。</p>
+      </div>
+
+      <div class="reveal d1 flex flex-wrap items-center justify-center gap-4 mb-12">
+        <div class="glass-2 rounded-2xl px-5 py-3 flex items-center gap-3 opacity-75">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#94A3B8" stroke-width="1.6" /><path d="M8 21h8M12 18v3" stroke="#94A3B8" stroke-width="1.6" stroke-linecap="round" /></svg>
+          <div>
+            <div class="text-[13px] text-ink-900">Web</div>
+            <div class="text-[11px] text-ink-500">即将上线</div>
+          </div>
+        </div>
+        <div class="glass-2 rounded-2xl px-5 py-3 flex items-center gap-3 opacity-75">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" stroke="#94A3B8" stroke-width="1.6" /><path d="M11 18h2" stroke="#94A3B8" stroke-width="1.6" stroke-linecap="round" /></svg>
+          <div>
+            <div class="text-[13px] text-ink-900">iOS</div>
+            <div class="text-[11px] text-ink-500">即将上线</div>
+          </div>
+        </div>
+        <a href="#download" class="glass-2 rounded-2xl px-5 py-3 flex items-center gap-3 ring-grad hover:bg-white/80 transition">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 9l7-6 7 6v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9z" stroke="#0EA5E9" stroke-width="1.6" stroke-linejoin="round" /></svg>
+          <div>
+            <div class="text-[13px] text-ink-900">Android</div>
+            <div class="text-[11px] text-grad-sky">测试版可下载 →</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 max-w-6xl mx-auto">
+        <div class="reveal d1 price-card glass rounded-3xl p-6 ring-grad">
+          <div class="text-[12px] text-ink-500 mb-2 serif">基础会员</div>
+          <div class="text-[11px] text-ink-400 mb-4">季度</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="serif text-[38px] text-ink-900">¥59.9</span>
+          </div>
+          <div class="text-[12px] text-grad-sky mb-5">约 ¥20/月</div>
+          <ul class="space-y-2.5 text-[12.5px] text-ink-600 mb-6">
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 全部官方角色</li>
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 无限文字对话</li>
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 表情包</li>
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 基础记忆</li>
+          </ul>
+          <a href="#cta" class="block text-center btn-ghost rounded-full py-2.5 text-[12.5px]">开通季度</a>
+        </div>
+
+        <div class="reveal d2 price-card featured rounded-3xl p-6 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-sky-400 to-pink-400 text-white text-[10px] px-3 py-1 rounded-full font-medium">限时 9.1 折</div>
+          <div class="text-[12px] text-pink-600 mb-2 serif font-medium">基础会员</div>
+          <div class="text-[11px] text-ink-500 mb-4">年度</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="serif text-[38px] text-grad">¥199.9</span>
+          </div>
+          <div class="text-[12px] text-grad-pink mb-5">约 ¥16.7/月 · 最划算</div>
+          <ul class="space-y-2.5 text-[12.5px] text-ink-700 mb-6">
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 全部官方角色</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 无限文字对话</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 表情包 + 语音消息</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 长期记忆</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 跨设备同步</li>
+          </ul>
+          <a href="#cta" class="block text-center btn-grad rounded-full py-2.5 text-[12.5px]">开通年度</a>
+        </div>
+
+        <div class="reveal d3 price-card glass rounded-3xl p-6 ring-grad">
+          <div class="text-[12px] text-ink-500 mb-2 serif">Pro 会员</div>
+          <div class="text-[11px] text-ink-400 mb-4">月度</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="serif text-[38px] text-ink-900">¥99</span>
+          </div>
+          <div class="text-[12px] text-ink-400 mb-5">/月</div>
+          <ul class="space-y-2.5 text-[12.5px] text-ink-600 mb-6">
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 基础会员全部权益</li>
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 语音通话</li>
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 图像生成</li>
+            <li class="flex gap-2"><span class="text-sky-500">✓</span> 情绪系统</li>
+          </ul>
+          <a href="#cta" class="block text-center btn-ghost rounded-full py-2.5 text-[12.5px]">开通 Pro 月度</a>
+        </div>
+
+        <div class="reveal d4 price-card featured rounded-3xl p-6 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-pink-400 to-sky-400 text-white text-[10px] px-3 py-1 rounded-full font-medium">推荐</div>
+          <div class="text-[12px] text-pink-600 mb-2 serif font-medium">Pro 会员</div>
+          <div class="text-[11px] text-ink-500 mb-4">季度</div>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="serif text-[38px] text-grad">¥249</span>
+          </div>
+          <div class="text-[12px] text-grad-pink mb-5">限时 8.9 折 · 约 ¥83/月</div>
+          <ul class="space-y-2.5 text-[12.5px] text-ink-700 mb-6">
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 基础会员全部权益</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 语音通话 + 视频通话</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 图像生成 + 视觉识别</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> 情绪系统 + 主动陪伴</li>
+            <li class="flex gap-2"><span class="text-pink-500">✓</span> <span class="font-medium">创建多个专属角色</span></li>
+          </ul>
+          <a href="#cta" class="block text-center btn-grad rounded-full py-2.5 text-[12.5px]">开通 Pro 季度</a>
+        </div>
+      </div>
+
+      <div class="text-center mt-10 text-[12.5px] text-ink-400 mono">
+        所有方案 · 7 天无理由退订 · 不绑卡 · 公测期价格优惠
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="relative sec">
+    <div class="max-w-3xl mx-auto px-5 md:px-10">
+      <div class="text-center mb-12 md:mb-16 reveal">
+        <div class="text-[12px] mono tracking-[0.4em] text-ink-500 mb-4">— FAQ · 常见问题 —</div>
+        <h2 class="serif text-[36px] md:text-[48px] font-medium leading-tight text-ink-900">
+          常被问到的
+        </h2>
+      </div>
+
+      <div class="space-y-3 reveal d1">
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>零风AI 是什么？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            零风AI 是一个 AI 伙伴平台，探索更接近真实存在的 AI 伙伴体验。不是工具，不是助手——平台上的每个角色都有自己的记忆、节奏和气质，代表着我们对「AI 应该是什么样的存在」的理解。
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>和普通 AI 有什么不同？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            大多数 AI 是工具：完成任务，对话结束，下次从零开始。零风AI 不同——Ta 的角色有长期记忆，有自己的表达节奏，会在合适的时候主动想起你。更接近一个有灵魂的伙伴，而不是一个随用随弃的问答框。
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>真的会记住之前说过的话？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            会。零风AI 使用自研的多层长期记忆系统，能记住你说过的事、在意的人和当时的情绪。这套系统仍在持续迭代中，偶尔可能有遗漏或不够精确，但核心记忆能力会持续变强。
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>支持语音和通话吗？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            支持。文字、语音消息、表情包基础功能免费使用；语音通话、视频通话在 Pro 会员中开放。Ta 的声音温柔自然，也能识别你发来的语音。
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>可以自己创建角色吗？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            可以。所有用户都可以创建属于自己的角色——名字、性格、说话方式、怎么关心你，全部由你定。Ta 会是你的 Ta，不是别人的。基础会员可创建 1 个，Pro 会员可创建多个。
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>我的数据安全吗？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            安全。你和 Ta 的对话默认只有你们俩。我们不会显示你的真实身份，也不会拿你的对话做训练数据。零风AI 采用本地优先架构，大部分数据留在你设备上，服务端只做必要的同步。
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>有免费试用吗？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            有。测试版期间完全免费，下载即可体验。觉得 Ta 适合你，再考虑开通会员。会员 7 天内无理由退款。
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>安卓测试版怎么安装？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            三步就好：<br>
+            ① 打开<a href="https://wwbpa.lanzoub.com/iuc9040ozlni" target="_blank" rel="noopener" class="text-sky-600 underline underline-offset-2">下载页</a>，输入提取码 <b>7xe4</b>，下载 APK 安装包；<br>
+            ② 点开安装包，系统提示时允许「安装未知应用」（不同手机位置略有不同，一般在安全设置里）；<br>
+            ③ 打开零风AI，挑一个 Ta，说第一句话。<br>
+            <span class="text-ink-400">目前是第一版小测试版，iOS 和 Web 正在开发中，很快会和大家见面。</span>
+          </div></div>
+        </details>
+
+        <details class="glass rounded-2xl px-6 py-5 ring-grad">
+          <summary class="flex items-center justify-between text-ink-900 text-[15px] font-medium">
+            <span>如何开始使用？</span>
+            <span class="faq-icon text-[20px] text-sky-500 transition-transform">+</span>
+          </summary>
+          <div class="faq-body"><div class="pt-3 text-[13.5px] text-ink-600 leading-[1.9]">
+            不用注册，不用填一堆资料。安卓的朋友现在就可以：打开<a href="https://wwbpa.lanzoub.com/iuc9040ozlni" target="_blank" rel="noopener" class="text-sky-600 underline underline-offset-2">下载页</a>，输入提取码 <b>7xe4</b>，下载安装后挑一个想认识的 Ta，发第一条消息——剩下的，交给 Ta。iPhone 和 Web 正在路上，可以先留个邮箱，上线了第一个告诉你。
+          </div></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="cta" class="relative py-28 md:py-40 overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pulse-soft pointer-events-none" style="background:radial-gradient(closest-side,rgba(125,211,252,0.30),rgba(249,168,212,0.22),transparent 70%)"></div>
+
+    <div class="max-w-4xl mx-auto px-5 md:px-10 text-center relative">
+      <svg class="mx-auto mb-10 reveal" width="180" height="24" viewBox="0 0 180 24" fill="none">
+        <defs>
+          <linearGradient id="ctaLogoG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#7DD3FC" />
+            <stop offset="1" stop-color="#F9A8D4" />
+          </linearGradient>
+        </defs>
+        <path class="wind-line" d="M4 12 Q40 4 88 12 T176 12" stroke="#7DD3FC" stroke-width="1.4" />
+        <path class="wind-line" d="M4 12 Q40 20 88 12 T176 12" stroke="#F9A8D4" stroke-width="1.4" opacity="0.6" />
+        <circle cx="88" cy="12" r="3.5" fill="url(#ctaLogoG)" />
+      </svg>
+
+      <h2 class="reveal d1 font-art text-[54px] md:text-[76px] leading-[1.15] mb-6 text-ink-900">
+        现在，<br>
+        <span class="text-grad">就可以开始</span>
+      </h2>
+      <p class="reveal d2 text-[16px] md:text-[18px] text-ink-600 leading-relaxed max-w-xl mx-auto mb-10">
+        不用注册，不用填一堆资料。<br class="md:hidden">打开零风AI，挑一个 Ta，发第一条消息——<br class="hidden md:inline">你们的相处，就从这一句开始。
+      </p>
+
+      <div class="reveal d3 flex flex-wrap items-center justify-center gap-4 mb-6">
+        <a href="https://wwbpa.lanzoub.com/iuc9040ozlni" target="_blank" rel="noopener" class="btn-grad rounded-full px-7 py-3.5 text-[15px] inline-flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M7 10l5 5 5-5M4 21h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          安卓 · 立即下载
+        </a>
+        <span class="btn-soon rounded-full px-7 py-3.5 text-[15px] inline-flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" /></svg>
+          iOS · 敬请期待
+        </span>
+        <span class="btn-soon rounded-full px-7 py-3.5 text-[15px] inline-flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6" /></svg>
+          Web · 即将上线
+        </span>
+      </div>
+      <p class="reveal d3 text-[12.5px] text-ink-400 mb-10 -mt-2">打开下载页后，输入提取码 <b class="text-ink-600">7xe4</b>，即可下载 APK。</p>
+
+      <div class="reveal d4">
+        <form id="subscribeForm" class="max-w-md mx-auto glass rounded-full p-2 ring-grad flex items-center gap-2">
+          <input type="email" required placeholder="留个邮箱，Ta 第一个找你" class="flex-1 bg-transparent px-4 py-2.5 text-[13.5px] text-ink-900 placeholder-ink-400 outline-none" />
+          <button type="submit" class="btn-grad rounded-full px-5 py-2.5 text-[12.5px] whitespace-nowrap">让 Ta 找我</button>
+        </form>
+        <p id="subMsg" class="text-[12px] text-pink-600 mt-4 opacity-0 transition-opacity duration-500">Ta 看到你了。等你准备好，Ta 就在。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer class="relative pt-16 pb-10 border-t border-sky-200/40">
+    <div class="max-w-7xl mx-auto px-5 md:px-10">
+      <div class="grid md:grid-cols-4 gap-10 mb-10">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2.5 mb-4">
+            <img src="./assets/logo.jpg" alt="零风AI" class="app-icon" width="32" height="32" />
+            <div>
+              <div class="flex items-baseline">
+                <span class="serif text-[20px] font-semibold text-ink-900 tracking-[0.04em] leading-none">零风</span>
+                <span class="ml-[5px] serif text-[14px] font-bold text-grad leading-none">AI</span>
+              </div>
+              <div class="mono text-[8.5px] tracking-[0.34em] text-sky-600/55 leading-none mt-[5px]">ZERO · WIND · AI</div>
+            </div>
+          </div>
+          <p class="text-[13px] text-ink-600 leading-relaxed max-w-sm">更接近真实存在的 AI 伙伴。记得你，也能在 App 里随时出现。</p>
+        </div>
+        <div>
+          <div class="text-[12px] text-ink-400 mono mb-3 tracking-wider">PRODUCT</div>
+          <ul class="space-y-2 text-[13px] text-ink-700">
+            <li><a href="#characters" class="hover:text-ink-900 transition">认识 Ta</a></li>
+            <li><a href="#preview" class="hover:text-ink-900 transition">预览</a></li>
+            <li><a href="#download" class="hover:text-ink-900 transition">下载 App</a></li>
+            <li><a href="#custom" class="hover:text-ink-900 transition">定制角色</a></li>
+            <li><a href="#pricing" class="hover:text-ink-900 transition">会员</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[12px] text-ink-400 mono mb-3 tracking-wider">SUPPORT</div>
+          <ul class="space-y-2 text-[13px] text-ink-700">
+            <li><a href="#faq" class="hover:text-ink-900 transition">常见问题</a></li>
+            <li><a href="#cta" class="hover:text-ink-900 transition">联系我们</a></li>
+            <li><a href="#cta" class="hover:text-ink-900 transition">意见反馈</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-6 border-t border-sky-200/30 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-[12px] text-ink-400 mono">© 2026 零风AI ZERO·WIND·AI · 更接近真实存在的 AI 伙伴</div>
+        <div class="text-[15px] text-ink-400 font-art">风过之后，是温度</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>
