@@ -14,6 +14,9 @@ _check_*.pdf
 # 调试探针页
 website/_probe.html
 
+# 官网构建依赖
+website/node_modules/
+
 # 后端服务配置与密钥（含敏感信息，不入库）
 application.yml
 pub_key.pem
