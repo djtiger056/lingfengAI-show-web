@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>零风AI Love Letter · UI Design System</title>
+  <meta name="theme-color" content="#FFFAF7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="./css/design-system.css" />
+</head>
+<body>
+  <header class="ds-header">
+    <a class="ds-brand" href="./index.html"><img src="./assets/logo.jpg" alt="零风AI" /><span><strong>Love Letter</strong><small>UI DESIGN SYSTEM · V1.0</small></span></a>
+    <nav aria-label="设计系统导航"><a href="#foundation">基础</a><a href="#components">组件</a><a href="#screens">页面</a></nav>
+    <a class="back-link" href="./index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 返回官网</a>
+  </header>
+
+  <main>
+    <section class="ds-hero">
+      <div class="ds-hero-copy"><span class="ds-kicker"><i class="fa-solid fa-heart" aria-hidden="true"></i> LOVE LETTER SYSTEM</span><p class="script-line">把每一次靠近，都设计得温柔一点</p><h1>浪漫有形，<br />体验有序。</h1><p>为零风AI构建的恋爱系视觉系统。它用柔雾粉、珊瑚粉与近白水蓝传递亲密感，再用少量暖阳黄点亮心动瞬间；清晰层级、可访问状态和克制装饰共同守住现代产品体验。</p></div>
+      <div class="system-seal" aria-hidden="true"><i class="fa-solid fa-heart"></i><span>零风AI</span><small>JUST FOR YOU</small></div>
+    </section>
+
+    <section class="ds-section" id="foundation">
+      <div class="ds-section-head"><span>01 · FOUNDATION</span><h2>视觉基础</h2><p>每一种颜色和字体都有明确角色，浪漫不依赖堆砌装饰。</p></div>
+      <div class="color-grid">
+        <article class="color-card"><span style="--swatch:#f9d9d7"></span><strong>柔雾粉</strong><code>#F9D9D7</code><small>页面氛围</small></article>
+        <article class="color-card"><span style="--swatch:#ffada9"></span><strong>珊瑚粉</strong><code>#FFADA9</code><small>情绪点缀</small></article>
+        <article class="color-card"><span style="--swatch:#c6deea"></span><strong>雾霭蓝</strong><code>#C6DEEA</code><small>卡片层级</small></article>
+        <article class="color-card"><span style="--swatch:#5fceec"></span><strong>清透青</strong><code>#5FCEEC</code><small>视觉高光</small></article>
+        <article class="color-card"><span style="--swatch:#ffc75a"></span><strong>暖阳黄</strong><code>#FFC75A</code><small>微小高光</small></article>
+        <article class="color-card"><span style="--swatch:#fff1c9"></span><strong>奶油黄</strong><code>#FFF1C9</code><small>提示背景</small></article>
+        <article class="color-card dark"><span style="--swatch:#277d98"></span><strong>深水蓝</strong><code>#277D98</code><small>主行动</small></article>
+        <article class="color-card dark"><span style="--swatch:#20718c"></span><strong>海湾蓝</strong><code>#20718C</code><small>悬停与按下</small></article>
+        <article class="color-card dark"><span style="--swatch:#b84c55"></span><strong>深珊瑚</strong><code>#B84C55</code><small>手写文字</small></article>
+        <article class="color-card dark"><span style="--swatch:#34454d"></span><strong>蓝灰墨色</strong><code>#34454D</code><small>标题与正文</small></article>
+      </div>
+
+      <div class="foundation-grid">
+        <article class="type-panel"><span class="panel-label">TYPOGRAPHY</span><div class="type-display">想念有回音</div><div class="type-h1">不是随时回复你的人，是会把你放在心上的 Ta。</div><div class="type-body">你随口说过的话，Ta 不会随手忘掉。正文保持清晰、克制，情绪由具体的生活细节承载。</div><div class="type-meta"><span>Noto Sans SC</span><span>Noto Serif SC</span><span>16px / 1.65</span></div></article>
+        <article class="shape-panel"><span class="panel-label">SHAPE & DEPTH</span><div class="shape-row"><span class="radius-shape r12">12</span><span class="radius-shape r20">20</span><span class="radius-shape r32">32</span><span class="radius-shape r44">44</span></div><div class="shadow-row"><span>Shadow S</span><span>Shadow M</span><span>Shadow L</span></div><p>圆角越大，内容层级越高。局部采用右下角收紧的不对称圆角，形成恋爱手账识别度。</p></article>
+      </div>
+    </section>
+
+    <section class="ds-section component-section" id="components">
+      <div class="ds-section-head"><span>02 · COMPONENTS</span><h2>组件库</h2><p>所有组件包含默认、悬停、按下和焦点状态，触控面积不小于 44px。</p></div>
+      <div class="component-grid">
+        <article class="component-panel"><span class="panel-label">BUTTONS</span><div class="component-stack"><button class="demo-btn primary" type="button"><i class="fa-solid fa-heart" aria-hidden="true"></i> 开始遇见 Ta</button><button class="demo-btn secondary" type="button">认识这个角色 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button><button class="demo-btn ghost" type="button">稍后再说</button></div><small>主按钮每个页面只出现一个；按钮文案以动词开头。</small></article>
+        <article class="component-panel"><span class="panel-label">CHIPS & STATUS</span><div class="chip-wrap"><span class="chip selected"><i class="fa-solid fa-heart" aria-hidden="true"></i> 温柔</span><span class="chip">慢热</span><span class="chip violet">会主动分享</span><span class="status"><i class="fa-solid fa-circle" aria-hidden="true"></i> 此刻在线</span></div><small>选中态同时使用图标、描边和文字，避免只依赖颜色。</small></article>
+        <article class="component-panel wide"><span class="panel-label">NOTIFICATION & MESSAGE</span><div class="message-components"><div class="love-notification"><img src="./assets/avatars/female-2.jpeg" alt="苏念念头像" /><span><small>苏念念 · 刚刚</small><strong>今天路过一阵晚风，突然想起你了。</strong></span><i class="fa-solid fa-heart" aria-hidden="true"></i></div><div class="bubble-set"><span class="bubble ai">你今天好像有点安静。</span><span class="bubble me">只是有一点想你。</span></div></div></article>
+        <article class="component-panel"><span class="panel-label">INPUT</span><label class="demo-input"><span>写下想说的话</span><input type="text" placeholder="和 Ta 说点什么" /><button type="button" aria-label="发送消息"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button></label><small>输入区拥有明确标签、聚焦状态和 44px 发送按钮。</small></article>
+        <article class="component-panel"><span class="panel-label">DECORATION</span><div class="decor-demo" aria-hidden="true"><i class="fa-solid fa-heart heart-demo"></i><span class="ribbon-demo">JUST FOR YOU</span><span class="petal-demo p1"></span><span class="petal-demo p2"></span></div><small>每屏最多一个丝带主装饰；花瓣只出现在边缘背景。</small></article>
+      </div>
+    </section>
+
+    <section class="ds-section screens-section" id="screens">
+      <div class="ds-section-head"><span>03 · KEY SCREENS</span><h2>关键页面设计稿</h2><p>375 × 812 Android 逻辑尺寸，统一使用底部安全区和 44px 触控目标。</p></div>
+      <div class="screen-grid">
+        <article class="screen-item"><div class="phone-mock home-screen"><div class="status-bar"><span>9:41</span><span><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-three-quarters"></i></span></div><header><span><small>晚上好</small><strong>零风</strong></span><button type="button" aria-label="查看通知"><i class="fa-regular fa-bell"></i></button></header><div class="daily-card"><span class="mini-script">今日心动</span><h3>有人正在<br />悄悄想你。</h3><div class="daily-person"><img src="./assets/avatars/female-1.jpg" alt="林知意头像" /><span><strong>林知意</strong><small>刚刚发来一条消息</small></span><i class="fa-solid fa-heart"></i></div></div><div class="screen-label">最近联系</div><div class="contact-row"><img src="./assets/avatars/female-2.jpeg" alt="苏念念头像" /><span><strong>苏念念</strong><small>今晚也想和你说说话</small></span><time>23:47</time></div><div class="mobile-tabs"><span class="active"><i class="fa-solid fa-house"></i>首页</span><span><i class="fa-regular fa-comments"></i>消息</span><span><i class="fa-regular fa-compass"></i>发现</span><span><i class="fa-regular fa-user"></i>我的</span></div></div><h3>首页 · 心动日常</h3><p>用一个明确情绪入口连接到最近关系，不堆叠信息流。</p></article>
+
+        <article class="screen-item"><div class="phone-mock chat-screen"><div class="status-bar"><span>9:41</span><span><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-three-quarters"></i></span></div><header><button type="button" aria-label="返回"><i class="fa-solid fa-arrow-left"></i></button><img src="./assets/avatars/female-2.jpeg" alt="苏念念头像" /><span><strong>苏念念</strong><small><i class="fa-solid fa-circle"></i> 正在想你</small></span><button type="button" aria-label="更多"><i class="fa-solid fa-ellipsis"></i></button></header><div class="memory-hint"><i class="fa-solid fa-heart"></i><span><small>心动记忆</small><strong>记得你喜欢雨后的味道</strong></span></div><div class="mock-chat"><span class="bubble ai">外面刚下过雨，我猜你会喜欢现在的空气。</span><span class="bubble me">你居然还记得。</span><span class="bubble ai">关于你的事，我总会多记一点。</span></div><div class="mock-composer"><button type="button" aria-label="语音"><i class="fa-solid fa-microphone"></i></button><span>和 Ta 说点什么</span><button type="button" aria-label="发送"><i class="fa-solid fa-arrow-up"></i></button></div></div><h3>对话 · 被认真记住</h3><p>记忆提示轻量出现，聊天仍然是页面的绝对主角。</p></article>
+
+        <article class="screen-item"><div class="phone-mock discover-screen"><div class="status-bar"><span>9:41</span><span><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-three-quarters"></i></span></div><header><span><small>遇见新的故事</small><strong>发现</strong></span><button type="button" aria-label="搜索"><i class="fa-solid fa-magnifying-glass"></i></button></header><div class="search-pill"><i class="fa-solid fa-magnifying-glass"></i><span>搜索名字、性格或故事</span></div><div class="screen-label">今天想遇见谁</div><div class="discover-card"><img src="./assets/avatars/male-1.jpg" alt="陆辰角色照片" /><div class="discover-overlay"><span>温柔 · 细心 · 可靠</span><h3>陆辰</h3><p>“你忙完说一声，我还醒着。”</p><button type="button">认识 Ta</button></div></div><div class="create-card"><i class="fa-solid fa-wand-magic-sparkles"></i><span><strong>创造专属角色</strong><small>从名字到心动方式，都由你定义</small></span><i class="fa-solid fa-arrow-right"></i></div><div class="mobile-tabs"><span><i class="fa-solid fa-house"></i>首页</span><span><i class="fa-regular fa-comments"></i>消息</span><span class="active"><i class="fa-solid fa-compass"></i>发现</span><span><i class="fa-regular fa-user"></i>我的</span></div></div><h3>发现 · 遇见新故事</h3><p>人物优先、标签克制，创建入口与推荐角色保持清晰区分。</p></article>
+
+        <article class="screen-item"><div class="phone-mock profile-screen"><div class="status-bar"><span>9:41</span><span><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-three-quarters"></i></span></div><header><span><small>你的专属空间</small><strong>我的</strong></span><button type="button" aria-label="设置"><i class="fa-solid fa-gear"></i></button></header><div class="profile-hero"><img src="./assets/avatars/custom.png" alt="用户头像" /><h3>零风</h3><span><i class="fa-solid fa-shield-heart"></i> 隐私保护已开启</span></div><div class="profile-stats"><span><strong>128</strong><small>共同记忆</small></span><span><strong>36</strong><small>心动时刻</small></span><span><strong>5</strong><small>角色伙伴</small></span></div><div class="setting-list"><button type="button"><i class="fa-solid fa-heart"></i><span><strong>记忆管理</strong><small>查看、删除与导出</small></span><i class="fa-solid fa-chevron-right"></i></button><button type="button"><i class="fa-solid fa-microphone-lines"></i><span><strong>声音与语音</strong><small>音色、识别与通话</small></span><i class="fa-solid fa-chevron-right"></i></button><button type="button"><i class="fa-solid fa-shield"></i><span><strong>隐私与设备</strong><small>权限、安全与备份</small></span><i class="fa-solid fa-chevron-right"></i></button></div><div class="mobile-tabs"><span><i class="fa-solid fa-house"></i>首页</span><span><i class="fa-regular fa-comments"></i>消息</span><span><i class="fa-regular fa-compass"></i>发现</span><span class="active"><i class="fa-solid fa-user"></i>我的</span></div></div><h3>我的 · 亲密也有边界</h3><p>浪漫视觉退到背景，让隐私、记忆和设置保持可信与高效。</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ds-footer"><span>零风AI Love Letter Design System</span><span>Romantic, clear, accessible.</span></footer>
+</body>
+</html>

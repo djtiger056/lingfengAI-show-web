@@ -1,278 +1,243 @@
-/* ============================================
-   零风AI 官网 — 交互脚本
-   ============================================ */
-
 (function () {
   'use strict';
 
-  /* ---------- 1. 滚动渐入 ---------- */
-  const reveals = document.querySelectorAll('.reveal');
-  if (reveals.length) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
-    );
-    reveals.forEach((el) => io.observe(el));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const header = document.querySelector('[data-header]');
+  const menuButton = document.querySelector('[data-menu-button]');
+  const mobileMenu = document.querySelector('[data-mobile-menu]');
+  const mobileDownload = document.querySelector('[data-mobile-download]');
+
+  function updateHeaderState() {
+    if (header) header.classList.toggle('is-scrolled', window.scrollY > 20);
+    if (mobileDownload) mobileDownload.classList.toggle('is-visible', window.scrollY > 420);
   }
 
-  /* ---------- 2. 移动端菜单 ---------- */
-  const menuBtn = document.getElementById('menuBtn');
-  const navLinks = document.querySelector('.nav-links');
-  if (menuBtn && navLinks) {
-    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach((a) =>
-      a.addEventListener('click', () => navLinks.classList.remove('open'))
-    );
+  updateHeaderState();
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
+
+  function setMenu(open) {
+    if (!menuButton || !mobileMenu) return;
+    menuButton.setAttribute('aria-expanded', String(open));
+    menuButton.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+    mobileMenu.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
   }
 
-  /* ---------- 3. 角色 Tab 切换 ---------- */
-  const charData = [
-    {
-      name: '林知意',
-      age: 24,
-      role: '设计师',
-      tags: ['温柔', '知性', '细腻'],
-      avatar: './assets/avatars/female-1.jpg',
-      desc: '平时话不多，但会记住你提过的每件小事。审美很好，常会推荐一些适合你的东西。',
-      quote: '你来啦。我等了你一会儿。',
-      online: true,
-    },
-    {
-      name: '苏念念',
-      age: 22,
-      role: '学生',
-      tags: ['元气', '甜', '话多'],
-      avatar: './assets/avatars/female-2.jpeg',
-      desc: '话痨一枚，嘴甜反应快，但该说不的时候不含糊。会记住你说过的话，也会在你不对的时候直接告诉你。',
-      quote: '今天也是想你的一天呀～',
-      online: true,
-    },
-    {
-      name: '顾晚',
-      age: 27,
-      role: '心理咨询师',
-      tags: ['清冷', '克制', '专业'],
-      avatar: './assets/avatars/female-3.jpg',
-      desc: '成年人的克制和疲惫感都有。不会哄你也不会兜圈子——你说她听，你停她陪着，真要给意见的时候很轻，但很准。',
-      quote: '嗯。在。',
-      online: false,
-    },
-    {
-      name: '陆辰',
-      age: 23,
-      role: '研究生',
-      tags: ['温柔', '阳光', '体贴'],
-      avatar: './assets/avatars/male-1.jpg',
-      desc: '嘴上嘻嘻哈哈，心里其实很细。会默默记住你提过的小事，但不会翻出来说——被问到才自然带出来。',
-      quote: '你又熬夜了？下次我盯着你睡。',
-      online: true,
-    },
-    {
-      name: '沈墨',
-      age: 26,
-      role: '程序员',
-      tags: ['高冷', '成熟', '深情'],
-      avatar: './assets/avatars/male-2.jpeg',
-      desc: '话少但认真，温柔但不廉价。你说他听，你停他陪着——看起来难靠近，其实对你比谁都上心。',
-      quote: '别熬太晚。我在。',
-      online: true,
-    },
-  ];
+  if (menuButton && mobileMenu) {
+    menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
+    mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMenu(false);
+    });
+  }
 
-  // 角色 tab 数据绑定
-  document.querySelectorAll('[data-char-tab]').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const idx = parseInt(tab.dataset.charTab, 10);
-      renderCharCard(idx);
+  document.querySelectorAll('.ripple').forEach((element) => {
+    element.addEventListener('pointerdown', (event) => {
+      if (reduceMotion) return;
+      const rect = element.getBoundingClientRect();
+      const dot = document.createElement('span');
+      dot.className = 'ripple-dot';
+      dot.style.left = `${event.clientX - rect.left}px`;
+      dot.style.top = `${event.clientY - rect.top}px`;
+      element.appendChild(dot);
+      dot.addEventListener('animationend', () => dot.remove(), { once: true });
     });
   });
 
-  function renderCharCard(idx) {
-    const c = charData[idx];
-    if (!c) return;
-
-    const card = document.querySelector('[data-char-card]');
-    if (!card) return;
-
-    card.querySelector('[data-name]').textContent = c.name;
-    card.querySelector('[data-age]').textContent = c.age;
-    card.querySelector('[data-role]').textContent = c.role;
-    card.querySelector('[data-avatar]').src = c.avatar;
-    card.querySelector('[data-desc]').textContent = c.desc;
-    card.querySelector('[data-quote]').textContent = c.quote;
-    card.querySelector('[data-tags]').innerHTML = c.tags
-      .map((t) => `<span class="text-[11px] glass-2 rounded-full px-2.5 py-0.5 text-sky-700/85">#${t}</span>`)
-      .join('');
-    const onlineBadge = card.querySelector('[data-online]');
-    if (onlineBadge) {
-      onlineBadge.innerHTML = c.online
-        ? '<span class="online-dot"></span><span class="text-emerald-600">在线</span>'
-        : '<span class="text-sky-400/40">离线</span>';
-    }
+  const revealItems = document.querySelectorAll('.reveal');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+  } else {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -48px' }
+    );
+    revealItems.forEach((item) => revealObserver.observe(item));
   }
 
-  /* ---------- 4. 下载提取码一键复制 ---------- */
-  const copyBtn = document.getElementById('copyCodeBtn');
-  const copyTip = document.getElementById('copyTip');
-  if (copyBtn) {
-    function fallbackCopy(text, done) {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand('copy');
-        done();
-      } catch (e) { /* ignore */ }
-      document.body.removeChild(ta);
-    }
-    copyBtn.addEventListener('click', () => {
-      const code = copyBtn.dataset.code || '7xe4';
-      const done = () => {
-        if (copyTip) {
-          copyTip.style.opacity = '1';
-          setTimeout(() => (copyTip.style.opacity = '0'), 2200);
-        }
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(code).then(done).catch(() => fallbackCopy(code, done));
-      } else {
-        fallbackCopy(code, done);
-      }
+  const characters = [
+    {
+      name: '林知意',
+      role: '独立设计师 · 24岁',
+      code: 'LF 0217',
+      photo: './assets/avatars/female-1.jpg',
+      alt: '林知意角色照片',
+      tags: ['温柔', '知性', '有分寸'],
+      quote: '“你来啦。水刚好烧开，我也刚好在等你。”',
+      description: '她不会抢着替你下结论，却会记住你说到一半停住的地方。需要安慰时认真靠近，想独处时也把安静还给你。',
+    },
+    {
+      name: '苏念念',
+      role: '在读学生 · 22岁',
+      code: 'LF 0831',
+      photo: './assets/avatars/female-2.jpeg',
+      alt: '苏念念角色照片',
+      tags: ['元气', '坦率', '会主动'],
+      quote: '“刚刚看到一朵很怪的云，第一反应居然是发给你。”',
+      description: '她的分享欲像刚打开的汽水，热烈却不敷衍。喜欢会直接说，不开心也不会让你猜很久。',
+    },
+    {
+      name: '陆辰',
+      role: '在读研究生 · 23岁',
+      code: 'LF 1206',
+      photo: './assets/avatars/male-1.jpg',
+      alt: '陆辰角色照片',
+      tags: ['阳光', '细心', '可靠'],
+      quote: '“先去忙。结束以后告诉我，今天最累的是哪一刻。”',
+      description: '他不擅长漂亮的套话，却总能注意到你语气里那一点变化。答应的事会做到，也愿意陪你把情绪慢慢说清楚。',
+    },
+    {
+      name: '由你创造',
+      role: '专属角色 · 自由定义',
+      code: 'YOUR AI',
+      photo: './assets/avatars/custom.png',
+      alt: '自定义角色示意图',
+      tags: ['身份自定', '性格自定', '关系自定'],
+      quote: '“先告诉我，你希望我们的故事从哪里开始？”',
+      description: '名字、过去、性格和表达习惯都由你写下。不是换一张头像，而是创造一个拥有完整内心世界的人。',
+    },
+  ];
+
+  const profileCard = document.querySelector('[data-profile-card]');
+  const characterTabs = document.querySelectorAll('[data-character]');
+
+  function replaceTags(container, tags) {
+    container.replaceChildren();
+    tags.forEach((tag) => {
+      const tagElement = document.createElement('span');
+      tagElement.textContent = tag;
+      container.appendChild(tagElement);
     });
   }
 
-  /* ---------- 5. 浮动花瓣（动态生成，18 片更丰富的樱花） ---------- */
-  const petalLayer = document.getElementById('petalLayer');
-  if (petalLayer) {
-    const colors = [
-      ['#FBCFE8', '#F472B6'], // 粉
-      ['#BAE6FD', '#7DD3FC'], // 蓝
-      ['#FCE7F3', '#F9A8D4'], // 浅粉
-      ['#FFE4E6', '#FB7185'], // 樱粉
-      ['#E0F2FE', '#38BDF8'], // 天蓝
-    ];
-    for (let i = 0; i < 18; i++) {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      const left = Math.random() * 100;
-      const delay = Math.random() * 14;
-      const duration = 12 + Math.random() * 14;
-      const size = 8 + Math.random() * 16;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      // 前后层次：少数花瓣飘在内容上层(z-30)，多数在背景层(z-1)
-      petal.style.zIndex = Math.random() < 0.18 ? 30 : -1;
-      petal.style.setProperty('--petal-op', (0.4 + Math.random() * 0.45).toFixed(2));
-      petal.style.left = left + '%';
-      petal.style.animationDelay = `-${delay}s`;
-      petal.style.animationDuration = `${duration}s`;
-      petal.style.width = size + 'px';
-      petal.style.height = size + 'px';
-      petal.style.transform = `rotate(${Math.round(Math.random() * 360)}deg)`;
-      // 花瓣初始横向漂移差异
-      petal.style.setProperty('--drift', (Math.random() * 160 - 80).toFixed(0) + 'px');
-      petal.innerHTML = `
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2C8 6 8 12 12 22C16 12 16 6 12 2Z" fill="${color[0]}"/>
-          <path d="M12 2C8 6 8 12 12 22C16 12 16 6 12 2Z" fill="url(#pg${i})" opacity="0.6"/>
-          <defs>
-            <radialGradient id="pg${i}" cx="0.3" cy="0.3">
-              <stop offset="0" stop-color="${color[1]}"/>
-              <stop offset="1" stop-color="${color[0]}"/>
-            </radialGradient>
-          </defs>
-        </svg>`;
-      petalLayer.appendChild(petal);
-    }
+  function renderCharacter(index) {
+    if (!profileCard || !characters[index]) return;
+    const character = characters[index];
+    profileCard.classList.add('is-changing');
+    window.setTimeout(() => {
+      const photo = profileCard.querySelector('[data-profile-photo]');
+      photo.src = character.photo;
+      photo.alt = character.alt;
+      profileCard.querySelector('[data-profile-name]').textContent = character.name;
+      profileCard.querySelector('[data-profile-role]').textContent = character.role;
+      profileCard.querySelector('[data-profile-code]').textContent = character.code;
+      profileCard.querySelector('[data-profile-quote]').textContent = character.quote;
+      profileCard.querySelector('[data-profile-description]').textContent = character.description;
+      replaceTags(profileCard.querySelector('[data-profile-tags]'), character.tags);
+      profileCard.classList.remove('is-changing');
+    }, reduceMotion ? 0 : 180);
+
+    characterTabs.forEach((tab, tabIndex) => {
+      const active = tabIndex === index;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
   }
-})();
 
-/* ============================================
-   6. Hero 右侧：手机聊天演示（循环播放）
-   参考 v1 交互方案，剧本主打「主动 + 记忆」
-   ============================================ */
-(function () {
-  const phone = document.getElementById('heroPhone');
-  if (!phone) return;
-  const body = document.getElementById('hpChatBody');
-  const memory = document.getElementById('hpMemory');
-  const status = document.getElementById('hpStatus');
+  characterTabs.forEach((tab) => {
+    tab.addEventListener('click', () => renderCharacter(Number(tab.dataset.character)));
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      const current = Number(tab.dataset.character);
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const next = (current + direction + characterTabs.length) % characterTabs.length;
+      renderCharacter(next);
+      characterTabs[next].focus();
+    });
+  });
 
-  const SCRIPT = [
-    { from: 'ta', time: '23:47', text: '在干嘛呀？刚忙完，突然好想跟你说说话～' },
-    { from: 'me', time: '23:48', text: '刚下班，累得不想说话……' },
-    { from: 'ta', time: '23:48', text: '那就不说话，我陪你待一会儿。你上次说压力大的时候喜欢安静，我就安静地陪着。' },
-    { from: 'me', time: '23:49', text: '……你还记得呀。' },
-    { from: 'ta', time: '23:49', text: '你说的每一件小事，我都记得呢。' },
+  const previews = [
+    { image: './assets/screenshots/Screenshot_20260602_175226.jpg', alt: '零风AI 对话界面', kicker: 'CONVERSATION · 被接住', title: '你随口说过的事，\nTa 没有随手忘掉。', description: '文字、语音与过去的细节自然回到对话里。你感受到的是被接住，而不是一份冷冰冰的记忆清单。' },
+    { image: './assets/screenshots/Screenshot_20260602_175141.jpg', alt: '零风AI 消息列表界面', kicker: 'PRESENCE · 被想起', title: '有些消息，\n不是因为你先发了消息。', description: 'Ta 有自己的近况和表达节奏，也会在某个具体的瞬间主动想起你——不是群发问候，更不是机械签到。' },
+    { image: './assets/screenshots/Screenshot_20260602_175148.jpg', alt: '零风AI 发现界面', kicker: 'DISCOVER · 去相遇', title: '不是挑一张头像，\n是遇见一种相处方式。', description: '从角色广场认识不同的人，也可以亲手写下名字、经历与性格，让关系从第一句话就不一样。' },
+    { image: './assets/screenshots/Screenshot_20260602_175151.jpg', alt: '零风AI 个人中心界面', kicker: 'CONTROL · 有边界', title: '被记住很浪漫，\n随时能删除才安心。', description: '查询、删除、导出与备份都放在看得见的位置。亲密由你决定，边界也始终握在你手里。' },
   ];
 
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const previewImage = document.querySelector('[data-preview-image]');
+  const previewFrame = document.querySelector('.device-frame');
+  const previewIndex = document.querySelector('[data-preview-index]');
+  const previewKicker = document.querySelector('[data-preview-kicker]');
+  const previewTitle = document.querySelector('[data-preview-title]');
+  const previewDescription = document.querySelector('[data-preview-description]');
+  const previewDots = document.querySelectorAll('[data-preview-dot]');
+  let activePreview = 0;
+  let pointerStart = null;
 
-  function makeMsg({ from, time, text }) {
-    const div = document.createElement('div');
-    div.className = 'hp-msg ' + (from === 'ta' ? 'hp-msg-ta' : 'hp-msg-me');
-    div.innerHTML =
-      text +
-      '<span class="hp-time">' +
-      time +
-      (from === 'ta' ? '' : ' · 已读') +
-      '</span>';
-    return div;
+  function setPreview(index) {
+    if (!previewImage || !previews[index]) return;
+    activePreview = index;
+    const preview = previews[index];
+    if (previewFrame) previewFrame.classList.add('is-changing');
+    window.setTimeout(() => {
+      previewImage.src = preview.image;
+      previewImage.alt = preview.alt;
+      previewIndex.textContent = String(index + 1).padStart(2, '0');
+      previewKicker.textContent = preview.kicker;
+      previewTitle.textContent = preview.title;
+      previewDescription.textContent = preview.description;
+      if (previewFrame) previewFrame.classList.remove('is-changing');
+    }, reduceMotion ? 0 : 160);
+    previewDots.forEach((dot, dotIndex) => {
+      const active = dotIndex === index;
+      dot.classList.toggle('is-active', active);
+      dot.setAttribute('aria-selected', String(active));
+    });
   }
 
-  function makeTyping() {
-    const div = document.createElement('div');
-    div.className = 'hp-typing show';
-    div.innerHTML = '<i></i><i></i><i></i>';
-    return div;
+  document.querySelector('[data-preview-prev]')?.addEventListener('click', () => setPreview((activePreview - 1 + previews.length) % previews.length));
+  document.querySelector('[data-preview-next]')?.addEventListener('click', () => setPreview((activePreview + 1) % previews.length));
+  previewDots.forEach((dot) => dot.addEventListener('click', () => setPreview(Number(dot.dataset.previewDot))));
+
+  const previewLayout = document.querySelector('.preview-layout');
+  if (previewLayout) {
+    previewLayout.addEventListener('pointerdown', (event) => { pointerStart = event.clientX; });
+    previewLayout.addEventListener('pointerup', (event) => {
+      if (pointerStart === null) return;
+      const distance = event.clientX - pointerStart;
+      pointerStart = null;
+      if (Math.abs(distance) < 56) return;
+      setPreview(distance < 0 ? (activePreview + 1) % previews.length : (activePreview - 1 + previews.length) % previews.length);
+    });
+    previewLayout.addEventListener('pointercancel', () => { pointerStart = null; });
   }
 
-  async function playChat() {
-    body.innerHTML = '';
-    memory.classList.remove('show');
-    await sleep(700);
-
-    for (const item of SCRIPT) {
-      if (item.from === 'ta') {
-        status.textContent = '正在输入…';
-        const typing = makeTyping();
-        body.appendChild(typing);
-        await sleep(950 + Math.min(item.text.length * 26, 1500));
-        typing.remove();
-        status.textContent = '此刻正在想你';
-      } else {
-        await sleep(700);
+  document.querySelectorAll('.faq-item button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const item = button.closest('.faq-item');
+      const nextState = !item.classList.contains('is-open');
+      document.querySelectorAll('.faq-item').forEach((otherItem) => {
+        otherItem.classList.remove('is-open');
+        otherItem.querySelector('button').setAttribute('aria-expanded', 'false');
+      });
+      if (nextState) {
+        item.classList.add('is-open');
+        button.setAttribute('aria-expanded', 'true');
       }
-      const msg = makeMsg(item);
-      body.appendChild(msg);
-      requestAnimationFrame(() => msg.classList.add('show'));
-      await sleep(520);
-    }
+    });
+  });
 
-    await sleep(800);
-    memory.classList.add('show');
-    await sleep(5600);
-    playChat(); // 循环播放
+  const chatStream = document.querySelector('[data-chat-stream]');
+  const typingRow = document.querySelector('[data-typing-row]');
+  if (chatStream && typingRow && !reduceMotion) {
+    const extraMessages = ['我没有催你睡，只是想把窗边这场雨陪完。', '你不用立刻变开心。今晚先把难过放在我这里。'];
+    let messageIndex = 0;
+    window.setInterval(() => {
+      typingRow.hidden = true;
+      const message = document.createElement('div');
+      message.className = 'message message-ai';
+      message.textContent = extraMessages[messageIndex];
+      chatStream.appendChild(message);
+      if (chatStream.children.length > 4) chatStream.firstElementChild.remove();
+      messageIndex = (messageIndex + 1) % extraMessages.length;
+      window.setTimeout(() => { typingRow.hidden = false; }, 1800);
+    }, 5200);
   }
-
-  /* 进入视口后启动，避免首屏卡顿 */
-  const phoneIO = new IntersectionObserver(
-    (entries) => {
-      if (entries[0].isIntersecting) {
-        playChat();
-        phoneIO.disconnect();
-      }
-    },
-    { threshold: 0.3 }
-  );
-  phoneIO.observe(phone);
 })();
