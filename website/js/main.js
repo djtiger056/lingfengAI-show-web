@@ -26,10 +26,27 @@
   const menuBtn = document.getElementById('menuBtn');
   const navLinks = document.querySelector('.nav-links');
   if (menuBtn && navLinks) {
-    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach((a) =>
-      a.addEventListener('click', () => navLinks.classList.remove('open'))
-    );
+    const closeMenu = () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    };
+    const toggleMenu = () => {
+      const open = !navLinks.classList.contains('open');
+      navLinks.classList.toggle('open', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+    };
+    menuBtn.addEventListener('click', toggleMenu);
+    navLinks.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
+    });
+    document.addEventListener('click', (event) => {
+      if (!navLinks.classList.contains('open')) return;
+      if (!event.target.closest('nav')) closeMenu();
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) closeMenu();
+    }, { passive: true });
   }
 
   /* ---------- 3. 角色 Tab 切换 ---------- */
@@ -85,6 +102,94 @@
       online: true,
     },
   ];
+
+  /* ---------- 3.1 小屏卡片堆叠：角色和真实界面预览 ---------- */
+  function initCompactDeck(deck, cardSelector) {
+    if (!deck) return;
+    const cards = Array.from(deck.querySelectorAll(cardSelector));
+    if (cards.length < 2) return;
+    const compact = window.matchMedia('(max-width: 767px)');
+    const count = deck.querySelector('.preview-deck-count');
+    let active = 0;
+    let gesture = null;
+
+    function syncStack() {
+      cards.forEach((card, index) => {
+        const position = (index - active + cards.length) % cards.length;
+        const depth = Math.min(position, 3);
+        card.style.setProperty('--stack-index', depth);
+        card.style.setProperty('--stack-scale', (1 - depth * 0.025).toFixed(3));
+        card.style.setProperty('--drag-x', '0px');
+        card.style.zIndex = String(cards.length - position);
+        card.dataset.stackPosition = String(depth);
+        if (compact.matches) {
+          card.setAttribute('aria-hidden', String(position !== 0));
+        } else {
+          card.removeAttribute('aria-hidden');
+        }
+      });
+      deck.tabIndex = compact.matches ? 0 : -1;
+      if (count) count.textContent = (active + 1) + ' / ' + cards.length;
+    }
+
+    function changeCard(step) {
+      active = (active + step + cards.length) % cards.length;
+      syncStack();
+    }
+
+    function finishGesture(event, cancelled) {
+      if (!gesture || event.pointerId !== gesture.id) return;
+      const current = gesture;
+      gesture = null;
+      deck.classList.remove('is-dragging');
+      cards[active].style.setProperty('--drag-x', '0px');
+      const dx = event.clientX - current.x;
+      const dy = event.clientY - current.y;
+      if (!cancelled && compact.matches && Math.abs(dx) >= 44 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        changeCard(dx < 0 ? 1 : -1);
+      }
+      if (deck.hasPointerCapture(current.id)) deck.releasePointerCapture(current.id);
+    }
+
+    deck.addEventListener('pointerdown', (event) => {
+      if (!compact.matches || gesture || !event.isPrimary || event.button !== 0 || event.target.closest('button, a')) return;
+      gesture = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      deck.setPointerCapture(event.pointerId);
+    });
+    deck.addEventListener('pointermove', (event) => {
+      if (!gesture || event.pointerId !== gesture.id) return;
+      const dx = event.clientX - gesture.x;
+      const dy = event.clientY - gesture.y;
+      if (Math.abs(dx) < 8 || Math.abs(dx) <= Math.abs(dy) * 1.2) return;
+      deck.classList.add('is-dragging');
+      cards[active].style.setProperty('--drag-x', Math.max(-120, Math.min(120, dx)) + 'px');
+    });
+    deck.addEventListener('pointerup', (event) => finishGesture(event, false));
+    deck.addEventListener('pointercancel', (event) => finishGesture(event, true));
+    deck.addEventListener('lostpointercapture', (event) => finishGesture(event, true));
+    deck.addEventListener('dragstart', (event) => {
+      if (compact.matches) event.preventDefault();
+    });
+    deck.addEventListener('keydown', (event) => {
+      if (!compact.matches || event.target !== deck) return;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        changeCard(event.key === 'ArrowLeft' ? -1 : 1);
+      }
+    });
+    deck.querySelectorAll('[data-deck-step]').forEach((button) => {
+      button.addEventListener('click', () => changeCard(Number(button.dataset.deckStep)));
+    });
+    compact.addEventListener('change', () => {
+      gesture = null;
+      deck.classList.remove('is-dragging');
+      syncStack();
+    });
+    syncStack();
+  }
+
+  initCompactDeck(document.querySelector('.characters-deck'), '[data-role-card]');
+  initCompactDeck(document.querySelector('.preview-deck'), '[data-preview-card]');
 
   // 角色 tab 数据绑定
   document.querySelectorAll('[data-char-tab]').forEach((tab) => {

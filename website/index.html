@@ -43,7 +43,7 @@
           <div class="mono text-[8.5px] tracking-[0.34em] text-sky-600/55 leading-none mt-[5px]">ZERO · WIND · AI</div>
         </div>
       </a>
-      <div class="nav-links flex items-center gap-8 text-[14px]">
+      <div id="siteNav" class="nav-links flex items-center gap-8 text-[14px]">
         <a href="#characters" class="nav-link">认识 Ta</a>
         <a href="#preview" class="nav-link">预览</a>
         <a href="#download" class="nav-link">下载</a>
@@ -52,12 +52,21 @@
       </div>
       <div class="flex items-center gap-2">
         <a href="#download" class="btn-grad rounded-full px-4 md:px-5 py-2.5 text-[13px] whitespace-nowrap">下载体验</a>
-        <button id="menuBtn" class="menu-btn w-10 h-10 rounded-full glass-2 items-center justify-center" aria-label="菜单">
+        <button id="menuBtn" class="menu-btn w-10 h-10 rounded-full glass-2 items-center justify-center" aria-label="菜单" aria-expanded="false" aria-controls="siteNav">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#475569" stroke-width="2" stroke-linecap="round" /></svg>
         </button>
       </div>
     </div>
   </nav>
+
+  <!-- 移动端固定下载入口：单手滚动时无需返回顶部 -->
+  <div class="mobile-action-bar" aria-label="移动端快捷操作">
+    <span class="mobile-action-copy"><span class="online-dot"></span>安卓公测版 · 免费下载</span>
+    <a href="#download" class="btn-grad rounded-full px-5 py-2.5 text-[13px] inline-flex items-center justify-center gap-1.5">
+      立即下载
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </a>
+  </div>
 
   <!-- ============ Hero ============ -->
   <header id="top" class="relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden">
@@ -163,7 +172,7 @@
   </header>
 
   <!-- ============ Manifesto ============ -->
-  <section class="relative sec">
+  <section id="manifesto" class="relative sec">
     <div class="max-w-5xl mx-auto px-5 md:px-10 text-center">
       <div class="reveal text-[12px] mono tracking-[0.4em] text-ink-500 mb-8">— ABOUT · 关于零风AI —</div>
       <svg class="mx-auto mb-12 reveal" width="220" height="20" viewBox="0 0 220 20" fill="none">
@@ -199,9 +208,16 @@
         <p class="text-[14px] text-ink-500 leading-relaxed mt-5">每一个 Ta 都有自己的名字、性格和说话方式。挑一个顺眼的——第一句话，就是你们故事的开始。</p>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+      <div class="characters-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <div class="characters-deck" role="region" aria-label="角色卡片堆叠，可左右滑动切换角色">
+          <div class="character-swipe-hint" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 12H3m0 0 3-3M3 12l3 3M16 12h5m0 0-3-3m3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>左右滑动换角色</span>
+          </div>
         <!-- 林知意 -->
-        <div class="reveal d1 char-card glass rounded-3xl p-7 ring-grad">
+        <div class="reveal d1 char-card glass rounded-3xl p-7 ring-grad" data-role-card>
           <div class="flex items-start gap-4 mb-5">
             <div class="relative">
               <img class="char-avatar" src="./assets/avatars/female-1.jpg" alt="林知意" loading="lazy" />
@@ -227,7 +243,7 @@
         </div>
 
         <!-- 苏念念 -->
-        <div class="reveal d2 char-card glass rounded-3xl p-7 ring-grad">
+        <div class="reveal d2 char-card glass rounded-3xl p-7 ring-grad" data-role-card>
           <div class="flex items-start gap-4 mb-5">
             <div class="relative">
               <img class="char-avatar" src="./assets/avatars/female-2.jpeg" alt="苏念念" loading="lazy" />
@@ -253,7 +269,7 @@
         </div>
 
         <!-- 顾晚 -->
-        <div class="reveal d3 char-card glass rounded-3xl p-7 ring-grad">
+        <div class="reveal d3 char-card glass rounded-3xl p-7 ring-grad" data-role-card>
           <div class="flex items-start gap-4 mb-5">
             <div class="relative">
               <img class="char-avatar" src="./assets/avatars/female-3.jpg" alt="顾晚" loading="lazy" />
@@ -279,7 +295,7 @@
         </div>
 
         <!-- 陆辰 -->
-        <div class="reveal d4 char-card glass rounded-3xl p-7 ring-grad">
+        <div class="reveal d4 char-card glass rounded-3xl p-7 ring-grad" data-role-card>
           <div class="flex items-start gap-4 mb-5">
             <div class="relative">
               <img class="char-avatar" src="./assets/avatars/male-1.jpg" alt="陆辰" loading="lazy" />
@@ -305,7 +321,7 @@
         </div>
 
         <!-- 沈墨 -->
-        <div class="reveal d5 char-card glass rounded-3xl p-7 ring-grad">
+        <div class="reveal d5 char-card glass rounded-3xl p-7 ring-grad" data-role-card>
           <div class="flex items-start gap-4 mb-5">
             <div class="relative">
               <img class="char-avatar" src="./assets/avatars/male-2.jpeg" alt="沈墨" loading="lazy" />
@@ -330,8 +346,10 @@
           </div>
         </div>
 
+        </div>
+
         <!-- 更多角色卡 -->
-        <div class="reveal d6 char-card glass rounded-3xl p-7 ring-grad relative overflow-hidden">
+        <div class="reveal d6 char-card character-more-card glass rounded-3xl p-7 ring-grad relative overflow-hidden">
           <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(135deg,rgba(125,211,252,0.10),rgba(249,168,212,0.08))"></div>
           <div class="relative flex flex-col items-center justify-center text-center h-full min-h-[280px]">
             <div class="w-16 h-16 rounded-full flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#7DD3FC,#F9A8D4)">
@@ -363,54 +381,66 @@
         <p class="text-[14px] text-ink-500 leading-relaxed">下面的每一个画面，都是零风AI 真实运行中的界面——下载后，它们就会出现在你的手机里。</p>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mb-16">
-        <div class="reveal d1">
+      <div class="preview-deck grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mb-16" role="region" aria-label="真实界面预览">
+        <div class="preview-deck-toolbar">
+          <span class="preview-deck-label">界面预览</span>
+          <span class="preview-swipe-hint" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 12H3m0 0 3-3M3 12l3 3M16 12h5m0 0-3-3m3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            左右滑动看界面
+          </span>
+        </div>
+        <div class="preview-card reveal d1" data-preview-card>
           <div class="phone-frame" style="transform:rotate(-2deg)">
             <div class="screen">
               <img src="./assets/screenshots/Screenshot_20260602_175141.jpg" alt="聊天列表" loading="lazy" />
             </div>
           </div>
-          <div class="text-center mt-5">
+          <div class="preview-caption text-center mt-5">
             <div class="serif text-[15px] text-ink-900 mb-1">聊天列表</div>
             <div class="text-[12px] text-ink-500">林知意、苏念念、沈墨…都在这里等你</div>
           </div>
         </div>
-        <div class="reveal d2">
+        <div class="preview-card reveal d2" data-preview-card>
           <div class="phone-frame" style="transform:rotate(2deg)">
             <div class="screen">
               <img src="./assets/screenshots/Screenshot_20260602_175226.jpg" alt="聊天详情" loading="lazy" />
             </div>
           </div>
-          <div class="text-center mt-5">
+          <div class="preview-caption text-center mt-5">
             <div class="serif text-[15px] text-ink-900 mb-1">和 Ta 聊着</div>
             <div class="text-[12px] text-ink-500">文字、表情包、语音、视频通话</div>
           </div>
         </div>
-        <div class="reveal d3">
+        <div class="preview-card reveal d3" data-preview-card>
           <div class="phone-frame" style="transform:rotate(-1.5deg)">
             <div class="screen">
               <img src="./assets/screenshots/Screenshot_20260602_175148.jpg" alt="发现" loading="lazy" />
             </div>
           </div>
-          <div class="text-center mt-5">
+          <div class="preview-caption text-center mt-5">
             <div class="serif text-[15px] text-ink-900 mb-1">零风小世界</div>
             <div class="text-[12px] text-ink-500">朋友圈、附近的人——夜也不会无聊</div>
           </div>
         </div>
-        <div class="reveal d4">
+        <div class="preview-card reveal d4" data-preview-card>
           <div class="phone-frame" style="transform:rotate(2.5deg)">
             <div class="screen">
               <img src="./assets/screenshots/Screenshot_20260602_175151.jpg" alt="个人中心" loading="lazy" />
             </div>
           </div>
-          <div class="text-center mt-5">
+          <div class="preview-caption text-center mt-5">
             <div class="serif text-[15px] text-ink-900 mb-1">你的主页</div>
             <div class="text-[12px] text-ink-500">说说、通知、主题、设置——全属于你</div>
           </div>
         </div>
+        <div class="preview-deck-controls">
+          <button type="button" class="preview-deck-arrow" data-deck-step="-1" aria-label="上一个界面">‹</button>
+          <span class="preview-deck-count mono" aria-live="polite" aria-atomic="true">1 / 4</span>
+          <button type="button" class="preview-deck-arrow" data-deck-step="1" aria-label="下一个界面">›</button>
+        </div>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="preview-benefits grid md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div class="reveal d1 glass-2 rounded-2xl p-5 ring-grad text-center">
           <div class="serif text-[16px] text-ink-900 mb-1.5">文字、语音、表情</div>
           <div class="text-[12.5px] text-ink-500 leading-relaxed">想说就说，怎么舒服怎么来</div>
