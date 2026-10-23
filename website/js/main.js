@@ -5,15 +5,15 @@ const root=document.documentElement, reduced=matchMedia('(prefers-reduced-motion
 let heroSwipe=null, storySwipe=null, featureSwipe=null, mobileHeroCards=[];
 let storyIndex=0;
 root.classList.add('js-ready');
-const roles=[["林知意","female-1.jpg","温柔 · 知性","设计师","把你随口提起的小事，认真放在心上。安静，却总能给你刚刚好的回应。","你来啦。我等了你一会儿。"],["苏念念","female-2.jpeg","元气 · 直率","学生","从好玩的新鲜事，到偶尔的小烦恼。和她说话，日常也会变得热热闹闹。","今天也是想你的一天呀。"],["顾晚","female-3.jpg","文艺 · 细腻","自由撰稿人","分享一本书、一首歌，或是今天的晚霞。在细碎的日常里，找到彼此的共鸣。","今天的风，好像很适合散步。"],["陆辰","male-1.jpg","可靠 · 坦率","建筑师","认真听你讲，也会直接说出自己的想法。不用刻意找话题，相处就很自在。","别一个人扛着，跟我说说。"],["沈墨","male-2.jpeg","沉静 · 成熟","程序员","话不多，但每一句都认真。你想说，他就听；你想安静，他也愿意陪着。","别熬太晚。我在。"]];
+const roles=[["沈屿","shen-yu.webp","慢热","角色示例","慢热而安静，熟悉之后，会认真回应你分享的每一件小事。","拍得有点糊，你别笑。"],["林莹莹","lin-yingying.webp","生人勿近（其实对谁都友善）","角色示例","看起来有一点距离感，其实对谁都友善。慢慢聊，就会发现她柔软的一面。","现在插上电了，刚才你说到哪儿了？"],["沈砚之","shen-yanzhi.webp","冷静自持","角色示例","冷静自持，不急着给出答案。认真听你说，再陪你一起理清思绪。","那段就留着。别半夜跟它较劲。"],["程望舒","cheng-wangshu.webp","嘴硬心软","角色示例","嘴上不太会表达，行动上却总把你的事放在心上。","又没说不带你。上号。"],["周颖颖","zhou-yingying.webp","大大咧咧","角色示例","开朗爽快，愿意听你分享新鲜事，也让普通的日常多一点热闹。","桌子已经替我喝上了。"]];
 const scripts=[
-[['ta','忙完了吗？想来陪你待一会儿。'],['me','刚下班，今天有点累。'],['ta','记得你说，累的时候喜欢安静地待着。那我就陪着你。'],['me','这样待着，好像也挺好的。'],['ta','不急，你想说的时候，我就在。']],
-[['ta','出现！今天想听你说件小事。'],['me','今天没什么特别的呀。'],['ta','普通的一天，也想听你讲。'],['me','那就从午饭开始说吧。'],['ta','好呀，我准备好认真听啦。']],
-[['ta','今天的晚霞，像你说的那幅画。'],['me','想停下来多看一会儿。'],['ta','那就慢一点，把今天留给路边的风。'],['me','散步会轻松很多。'],['ta','等你想分享的时候，我就在。']],
-[['ta','忙完了吗？记得按时吃晚饭。'],['me','差点又忙忘了。'],['ta','先吃点东西，再慢慢跟我说。'],['me','有件事，想问问你的想法。'],['ta','好，我听着。我们一起想。']],
-[['ta','还没睡？'],['me','有一点睡不着，想找你聊聊。'],['ta','我在。不着急说，慢慢来。'],['me','这样待着也挺好的。'],['ta','嗯。你想说的时候，我就在。']]
+[["ta","今天看到一只猫，跟你头像好像。"],["me","所以你盯着人家看了多久？"],["ta","站了一会儿。想发你，又怕你在忙。"],["me","发呀，我又不会嫌你烦。"],["ta","那我发了。拍得有点糊，你别笑。"]],
+[["ta","我刚才是不是回得有点冷？"],["me","就一个“嗯”，我还以为你生气了。"],["ta","没有！手机只剩1%，我满屋子找充电器呢。"],["me","……我都开始反省自己了。"],["ta","别反省了，怪我。现在插上电了，刚才你说到哪儿了？"]],
+[["ta","还在改那份方案？"],["me","嗯，删了又写，感觉哪版都不行。"],["ta","先留一版，别全删。你最想保住哪部分？"],["me","开头那个点子，其实我还挺喜欢的。"],["ta","那段就留着。后面的明早再看，别半夜跟它较劲。"]],
+[["ta","上号。"],["me","昨天不是嫌我菜，不带我了吗？"],["ta","我说的是别往人堆里冲。又没说不带你。"],["me","那我今天还能玩辅助吗？"],["ta","能。技能别省着，残血了就喊我。"]],
+[["ta","救命，我刚把奶茶插了个对穿。"],["me","哈哈哈哈，你怎么做到的？"],["ta","别笑了，桌子已经替我喝上了。"],["me","所以你现在在擦桌子？"],["ta","一手擦桌子一手回你，够意思吧。"]]
 ];
-const memories=['累的时候，喜欢被安静地陪着','心情不好时，喜欢听一点新鲜事','喜欢在傍晚散步，看看路边的花','忙起来容易忘记吃饭','喜欢安静的夜晚，不喜欢被催促'];
+const memories=["头像是一只猫","只收到一个“嗯”时，以为她生气了","很喜欢方案开头的那个点子","玩游戏时喜欢选辅助","刚聊过奶茶洒在桌上的糗事"];
 let role=0, manualPaused=false, visible=false, touchReading=false, timer=null, cursor=0, scene=scripts[0];
 const body=document.getElementById('hpChatBody'),phone=document.getElementById('heroPhone'),toggle=document.getElementById('chatToggle'),stage=document.getElementById('heroStage');
 let playbackChat=body, playbackStatus=document.getElementById('hpStatus'), playbackStage=stage;
@@ -97,7 +97,7 @@ document.querySelectorAll('[data-hero-role]').forEach(b=>b.addEventListener('cli
 function showStory(index,animate=true){
   storyIndex=index;const r=roles[index];
   document.querySelectorAll('[data-role-choice]').forEach(n=>n.setAttribute('aria-pressed',String(+n.dataset.roleChoice===index)));
-  const image=document.getElementById('salonImage');image.src='./assets/avatars/'+r[1];
+  const image=document.getElementById('salonImage');image.src='./assets/avatars/'+r[1];image.alt=r[0]+'的角色示例形象';
   for(const [id,value] of Object.entries({salonName:r[0],salonJob:r[3],salonTraits:r[2],salonQuote:'“'+r[5]+'”',salonDescription:r[4]}))document.getElementById(id).textContent=value;
   document.getElementById('salonPreview').dataset.heroPreview=index;
   if(animate)fade(image);
