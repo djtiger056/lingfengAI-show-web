@@ -243,7 +243,7 @@ function setupMobileSwipes(){
   });
   storySwipe=nativeSwipe(storyTrack,{names:roles.map(r=>r[0]),label:'角色介绍',initial:storyIndex,onChange:index=>showStory(index,false)});
   featureSwipe=nativeSwipe(document.querySelector('.feature-panels'),{names:tabs.map(t=>t.querySelector('b').textContent),label:'陪伴功能',initial:active,retainDesktopState:true,onChange:index=>selectFeature(index,false,true)});
-  const gallerySwipe=nativeSwipe(document.querySelector('.app-screens'),{names:['聊天列表','聊天详情','发现页','个人中心'],label:'界面图片'});
+  const gallerySwipe=nativeSwipe(document.querySelector('.app-screens'),{names:[...document.querySelectorAll('.app-screens figcaption')].map(caption=>caption.textContent.trim()),label:'界面图片'});
   mobile.addEventListener('change',()=>{
     selectFeature(active,false);renderConversation();
     requestAnimationFrame(()=>[heroSwipe,storySwipe,featureSwipe,gallerySwipe].forEach(deck=>deck.sync()));

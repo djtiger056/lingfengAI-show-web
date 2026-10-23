@@ -3380,7 +3380,7 @@ h1,h2,h3 { color: var(--ink); font-weight: 600; }
 a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible {
   outline-color: #317da9;
 }
-/* An open, four-phone gallery: the images remain real, uncropped screenshots. */
+/* An open, five-phone gallery: the images remain real, uncropped screenshots. */
 .screens-gallery {
   position: relative;
   isolation: isolate;
@@ -3418,7 +3418,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 }
 .app-screens {
   display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-columns: repeat(5,minmax(0,1fr));
   width: 100%;
   max-width: 1080px;
   margin-inline: auto;
@@ -3431,6 +3431,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .screenshot-card:nth-child(2) { --phone-angle: 1.2deg; }
 .screenshot-card:nth-child(3) { --phone-angle: -1deg; }
 .screenshot-card:nth-child(4) { --phone-angle: 1.8deg; }
+.screenshot-card:nth-child(5) { --phone-angle: -1.2deg; }
 .phone-shell {
   position: relative;
   padding: 7px;
