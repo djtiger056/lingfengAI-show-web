@@ -4034,7 +4034,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
   .hero-device-layout .mobile-hero-deck .hero-stage { max-width: 100%; height: auto; padding-top: 0; }
   .hero-device-layout .hero-conversation-column { max-width: 340px; }
   .hero-device-layout .conversation-topline { margin-bottom: 10px; }
-  .hero-device-layout .conversation-window { min-height: 640px; padding-block: 24px; }
+  .hero-device-layout .conversation-window { min-height: 0; padding-block: 24px; }
   .hero-device-layout .hp-chat-body { padding: 10px; }
   .hero-device-layout .hp-memory { margin-top: 2px; }
   .hero-device-layout .hero-stage-footer { justify-content: space-between; }
