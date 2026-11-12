@@ -1771,6 +1771,52 @@ html:not(.js-ready) .panel-copy h3 br {
   line-height: 1.8;
   margin-top: 2px;
 }
+.resource-downloads {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid #dbe1ed;
+}
+.resource-downloads h3 {
+  font: 500 13px var(--sans);
+  margin-bottom: 10px;
+}
+.resource-download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  margin-top: 8px;
+  border: 1px solid #dbe4ed;
+  border-radius: 7px;
+  color: var(--ink-900);
+  background: #ffffffb5;
+  text-decoration: none;
+}
+.resource-download span,
+.resource-download small {
+  display: block;
+}
+.resource-download strong {
+  font-size: 13px;
+  font-weight: 500;
+}
+.resource-download small,
+.resource-downloads>p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.resource-download>.icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  color: #52758a;
+}
+.resource-downloads>p {
+  margin-top: 10px;
+}
 .faq-section {
   padding-bottom: 95px;
 }
