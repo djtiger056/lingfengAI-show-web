@@ -3584,6 +3584,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
     color: #4c5c75;
   }
   .swipe-instruction { color: #286b91; }
+  .swipe-autoplay { min-height: 44px; padding: 0; background: transparent; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
   .swipe-status { text-align: right; font-variant-numeric: tabular-nums; }
   .swipe-dots { display: flex; justify-content: center; align-items: center; gap: 6px; grid-column: 1/-1; min-height: 8px; }
   .swipe-dots i { width: 6px; height: 6px; border-radius: 10px; background: #b7cbdc; transition: width .2s,background-color .2s; }

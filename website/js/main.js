@@ -149,13 +149,23 @@ function updateReadingState(){
 const bar=document.querySelector('.mobile-action-bar');let scheduled=false;function updateBar(){scheduled=false;updateReadingState();const hide=innerWidth>680||[document.getElementById('heroDownload'),document.getElementById('apkDownload')].some(e=>{const r=e.getBoundingClientRect();return r.top<innerHeight-80&&r.bottom>0;});bar.dataset.hidden=String(hide);bar.inert=hide;}
 function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(updateBar);}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});new ResizeObserver(schedule).observe(document.querySelector('main'));addEventListener('pageshow',schedule);document.fonts?.ready.then(schedule);document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>{schedule();if(d.open)fade(d.querySelector('.faq-body,.disclosure-content'),250);}));
 /* Mobile uses native scrolling: touch, momentum and vertical page scrolling stay with the browser. */
-function nativeSwipe(track,{names,label,onChange=()=>{},initial=0,retainDesktopState=false}){
+function nativeSwipe(track,{names,label,onChange=()=>{},initial=0,retainDesktopState=false,autoplay=0}){
   const slides=Array.from(track.children);let current=initial,frame=0,lastWidth=0,scrolling=false,touching=false,settleTimer=null;
+  let autoplayTimer=null,inView=false,autoplayPaused=false;
   track.classList.add('swipe-track');track.dataset.swipe=label;
   track.setAttribute('aria-label',names.length+' 张'+label+'卡片，左右滑动切换');
   const meta=document.createElement('div');meta.className='swipe-meta';
   const hint=document.createElement('span');hint.className='swipe-instruction';hint.textContent='↔ 左右滑动切换';
-  const status=document.createElement('span');status.className='swipe-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.setAttribute('aria-atomic','true');
+  if(autoplay){
+    const pause=document.createElement('button');pause.type='button';pause.className='swipe-autoplay';
+    pause.textContent='暂停轮播';pause.setAttribute('aria-pressed','false');
+    pause.addEventListener('click',()=>{
+      autoplayPaused=!autoplayPaused;pause.setAttribute('aria-pressed',String(autoplayPaused));
+      pause.textContent=autoplayPaused?'继续轮播':'暂停轮播';syncAutoplay();
+    });
+    hint.append(' · ',pause);
+  }
+  const status=document.createElement('span');status.className='swipe-status';status.setAttribute('role','status');status.setAttribute('aria-live',autoplay?'off':'polite');status.setAttribute('aria-atomic','true');
   const dots=document.createElement('span');dots.className='swipe-dots';dots.setAttribute('aria-hidden','true');
   slides.forEach(()=>dots.append(document.createElement('i')));meta.append(hint,status,dots);track.after(meta);
   function paint(){
@@ -171,6 +181,15 @@ function nativeSwipe(track,{names,label,onChange=()=>{},initial=0,retainDesktopS
     else{track.removeAttribute('role');track.removeAttribute('aria-roledescription');}
   }
   function offset(index){return slides[index].offsetLeft-slides[0].offsetLeft;}
+  function syncAutoplay(){
+    clearTimeout(autoplayTimer);autoplayTimer=null;
+    const focused=document.activeElement;
+    if(!autoplay||!mobile.matches||!inView||document.hidden||reduced.matches||touching||autoplayPaused||(track.contains(focused)&&!focused.classList.contains('swipe-autoplay')))return;
+    autoplayTimer=setTimeout(()=>{
+      const next=(current+1)%slides.length;
+      go(next,next===0?'auto':'smooth');syncAutoplay();
+    },autoplay);
+  }
   function activate(index){if(index===current)return;current=index;paint();onChange(index);}
   function releaseSlides(){scrolling=true;slides.forEach(slide=>{slide.inert=false;});}
   function scheduleSettle(){clearTimeout(settleTimer);settleTimer=setTimeout(settle,170);}
@@ -194,8 +213,8 @@ function nativeSwipe(track,{names,label,onChange=()=>{},initial=0,retainDesktopS
     slides.forEach((_,i)=>{const d=Math.abs(offset(i)-track.scrollLeft);if(d<distance){best=i;distance=d;}});activate(best);
   }
   track.addEventListener('scroll',()=>{if(!scrolling)releaseSlides();if(!frame)frame=requestAnimationFrame(readScroll);scheduleSettle();},{passive:true});
-  track.addEventListener('touchstart',()=>{touching=true;clearTimeout(settleTimer);releaseSlides();},{passive:true});
-  for(const type of['touchend','touchcancel'])track.addEventListener(type,()=>{touching=false;scheduleSettle();},{passive:true});
+  track.addEventListener('touchstart',()=>{touching=true;clearTimeout(settleTimer);releaseSlides();syncAutoplay();},{passive:true});
+  for(const type of['touchend','touchcancel'])track.addEventListener(type,()=>{touching=false;scheduleSettle();syncAutoplay();},{passive:true});
   track.addEventListener('scrollend',()=>{readScroll();scheduleSettle();});
   track.addEventListener('keydown',e=>{
     if(!mobile.matches||e.target!==track)return;
@@ -203,7 +222,13 @@ function nativeSwipe(track,{names,label,onChange=()=>{},initial=0,retainDesktopS
     if(e.key==='ArrowRight')next++;else if(e.key==='ArrowLeft')next--;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;
     e.preventDefault();go(next,'smooth');
   });
-  function sync(){scrolling=false;touching=false;clearTimeout(settleTimer);paint();if(mobile.matches&&track.clientWidth)track.scrollTo({left:offset(current),behavior:'auto'});}
+  function sync(){scrolling=false;touching=false;clearTimeout(settleTimer);paint();if(mobile.matches&&track.clientWidth)track.scrollTo({left:offset(current),behavior:'auto'});syncAutoplay();}
+  if(autoplay){
+    track.addEventListener('focusin',syncAutoplay);track.addEventListener('focusout',()=>requestAnimationFrame(syncAutoplay));
+    document.addEventListener('visibilitychange',syncAutoplay);reduced.addEventListener('change',syncAutoplay);
+    if('IntersectionObserver'in window)new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;syncAutoplay();},{threshold:.2}).observe(track);
+    else inView=true;
+  }
   new ResizeObserver(()=>{const width=track.clientWidth;if(width===lastWidth)return;lastWidth=width;sync();}).observe(track);
   paint();requestAnimationFrame(sync);return {go,sync};
 }
@@ -242,8 +267,8 @@ function setupMobileSwipes(){
     storyTrack.append(card);
   });
   storySwipe=nativeSwipe(storyTrack,{names:roles.map(r=>r[0]),label:'角色介绍',initial:storyIndex,onChange:index=>showStory(index,false)});
-  featureSwipe=nativeSwipe(document.querySelector('.feature-panels'),{names:tabs.map(t=>t.querySelector('b').textContent),label:'陪伴功能',initial:active,retainDesktopState:true,onChange:index=>selectFeature(index,false,true)});
-  const gallerySwipe=nativeSwipe(document.querySelector('.app-screens'),{names:[...document.querySelectorAll('.app-screens figcaption')].map(caption=>caption.textContent.trim()),label:'界面图片'});
+  featureSwipe=nativeSwipe(document.querySelector('.feature-panels'),{names:tabs.map(t=>t.querySelector('b').textContent),label:'陪伴功能',initial:active,retainDesktopState:true,autoplay:3000,onChange:index=>selectFeature(index,false,true)});
+  const gallerySwipe=nativeSwipe(document.querySelector('.app-screens'),{names:[...document.querySelectorAll('.app-screens figcaption')].map(caption=>caption.textContent.trim()),label:'界面图片',autoplay:3000});
   mobile.addEventListener('change',()=>{
     selectFeature(active,false);renderConversation();
     requestAnimationFrame(()=>[heroSwipe,storySwipe,featureSwipe,gallerySwipe].forEach(deck=>deck.sync()));
