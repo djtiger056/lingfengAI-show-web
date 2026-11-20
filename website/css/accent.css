@@ -1,0 +1,839 @@
+/* ===========================================================
+   零风AI 官网 · 「三秒抓住」视觉增强层 (accent.css)
+   依赖：html.accent-on —— 由 js/accent.js 添加（无 JS 时样式不生效，页面保持原样）
+   原则：不改 experience.css / motion.css，全部以覆盖层实现，可整层摘除
+   三击：① 色彩爆发+尺度  ② 首屏主角前置  ③ 破格张力+质感
+   =========================================================== */
+
+:root{
+  --accent:#d85a30;        /* 朱砂橘：唯一强调色 */
+  --accent-deep:#b5401f;   /* 深赭：hover / 按压 */
+  --accent-soft:#fbeee7;   /* 极浅橘：点缀底 */
+  --ink-deep:#1f2d27;      /* 加深正文标题，拉开层级 */
+}
+
+/* 兜底：增强层的叠放元素不允许制造横向滚动（clip 不创建滚动容器，不影响 sticky） */
+html.accent-on,html.accent-on body{ overflow-x:clip; }
+
+/* ============ 第一击 · 色彩爆发 + 尺度之锤 ============ */
+html.accent-on .hero h1{
+  font-size:clamp(52px,5.7vw,80px);
+  line-height:1.16;
+  letter-spacing:-.045em;
+  color:var(--ink-deep);
+  margin:20px 0 18px;
+}
+html.accent-on .hero h1 .rose-text,
+html.accent-on .hero h1 .blue-text{
+  color:var(--accent);
+  -webkit-text-fill-color:var(--accent);
+}
+html.accent-on .hero .eyebrow{
+  color:var(--accent-deep);
+  border-color:#e7c9b9;
+  background:var(--accent-soft);
+}
+html.accent-on .hero .status-dot{ background:var(--accent); box-shadow:0 0 0 4px #d85a3022; }
+
+/* 主 CTA：实心橘 */
+html.accent-on .hero-actions .button,
+html.accent-on .download-main .button{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+  box-shadow:0 6px 16px #d85a3026,inset 0 1px 0 #ffffff40;
+  font-weight:600;
+}
+html.accent-on .hero-actions .button:hover,
+html.accent-on .download-main .button:hover{
+  background:var(--accent-deep);
+  border-color:var(--accent-deep);
+  box-shadow:0 9px 20px #d85a3033,inset 0 1px 0 #ffffff40;
+}
+
+/* 下载 CTA 固定贴住文案左边缘，排除磁吸位移，避免按钮被推离内容区 */
+html.accent-on .download-main .button{
+  display:flex;
+  width:max-content;
+  max-width:100%;
+  align-self:flex-start;
+  justify-self:start;
+  margin-left:0;
+  margin-right:0;
+}
+
+/* 超大数字视觉锤：首屏数据条 */
+html.accent-on .hero-metrics{
+  display:flex;
+  gap:0;
+  margin-top:26px;
+  padding-top:22px;
+  border-top:1px solid #e3ded3;
+}
+html.accent-on .hero-metric{
+  flex:1 1 0;
+  min-width:0;
+  padding-right:14px;
+}
+html.accent-on .hero-metric + .hero-metric{
+  padding-left:18px;
+  border-left:1px solid #e3ded3;
+}
+html.accent-on .hero-metric b{
+  display:block;
+  font-family:var(--serif);
+  font-size:clamp(34px,3.4vw,50px);
+  font-weight:600;
+  line-height:1;
+  letter-spacing:-.05em;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+}
+html.accent-on .hero-metric span{
+  display:block;
+  margin-top:7px;
+  font-size:11px;
+  letter-spacing:.06em;
+  color:var(--muted);
+}
+
+/* 章节标题同比放大，强化层级 */
+html.accent-on .section-heading h2,
+html.accent-on .role-showcase-copy h2,
+html.accent-on .download-main h2{
+  font-size:clamp(38px,3.9vw,56px);
+  line-height:1.28;
+  color:var(--ink-deep);
+}
+html.accent-on .blue-text,
+html.accent-on .rose-text{ color:var(--accent); -webkit-text-fill-color:var(--accent); }
+
+/* ============ 第二击 · 首屏主角前置 ============ */
+/* 角色大图作为舞台主视觉，手机演示缩小叠在右前，形成"人+产品"双锚点 */
+html.accent-on .hero-phone-demo{
+  position:relative;
+  display:block;
+  width:100%;
+  min-height:590px;
+}
+html.accent-on .hero-stage-portrait{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-58%);
+  width:min(430px,84%);
+  aspect-ratio:3/3.7;
+  border-radius:210px 210px 22px 22px;
+  overflow:hidden;
+  box-shadow:0 30px 60px #2b3d3326;
+  z-index:1;
+  background:#e8e4dc;
+}
+html.accent-on .hero-stage-portrait img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 22%;
+}
+html.accent-on .hero-stage-portrait::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 46%,#1f2d2722 72%,#1f2d2788 100%);
+}
+html.accent-on .hero-stage-badge{
+  position:absolute;
+  z-index:4;
+  top:12px;
+  right:-20px;
+  transform:rotate(9deg);
+  background:var(--accent);
+  color:#fff;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.08em;
+  white-space:nowrap;
+  pointer-events:none;
+  padding:9px 15px;
+  border-radius:4px;
+  box-shadow:0 8px 18px #d85a3040;
+}
+html.accent-on .hero-stage-caption{
+  position:absolute;
+  z-index:4;
+  left:2%;
+  bottom:104px;
+  max-width:33%;
+  color:#fff;
+  font-family:var(--serif);
+  text-shadow:0 2px 14px #1f2d27cc,0 1px 3px #1f2d27aa;
+}
+html.accent-on .hero-stage-caption span{ display:block; font-size:11px; opacity:.9; letter-spacing:.1em; }
+html.accent-on .hero-stage-caption strong{ display:block; font-size:30px; font-weight:500; margin-top:4px; }
+
+/* 手机框缩小、右移、前叠 */
+html.accent-on .hero-phone-viewport{
+  --phone-scale:.6;
+  position:absolute;
+  right:0;
+  bottom:36px;
+  z-index:3;
+  /* 机身外壳画在容器层，不受 iframe 内部 scale 影响：矮视口下仍能看清"一台手机" */
+  border-radius:30px;
+  background:#fbfdf9;
+  box-shadow:
+    0 0 0 5px #fbfdf9,
+    0 0 0 6px #c6d2c5,
+    0 0 0 10px #ffffff9e,
+    0 18px 38px #1f2d2748;
+}
+html.accent-on .hero-phone-note{
+  position:absolute;
+  z-index:4;
+  left:0;
+  bottom:0;
+  text-align:left;
+  max-width:46%;
+  color:var(--muted);
+}
+html.accent-on .hero-phone-note span{ color:#88928c; }
+
+/* ============ 第三击 · 破格张力 + 质感光感 ============ */
+/* 纸纹：极淡交叉网纹，仅叠加在首屏背景 */
+html.accent-on .hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.5;
+  background-image:
+    repeating-linear-gradient(0deg,transparent 0 3px,#293b3405 3px 4px),
+    repeating-linear-gradient(90deg,transparent 0 3px,#293b3405 3px 4px);
+  z-index:0;
+}
+html.accent-on .hero > *{ position:relative; z-index:1; }
+
+/* 强调色柔光：跟随指针（由 accent.js 写入 --gx/--gy） */
+html.accent-on .hero-layout::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(420px circle at var(--gx,70%) var(--gy,40%),#d85a3014,transparent 65%);
+  z-index:0;
+}
+html.accent-on .hero-layout{ position:relative; }
+
+/* 卡片破格：视觉块微旋 + 悬停回正 */
+html.accent-on .feature-visual,
+html.accent-on .moments-scene,
+html.accent-on .voice-visual{
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;
+}
+html.accent-on .memory-visual{ transform:rotate(-1.4deg); }
+html.accent-on .proactive-visual{ transform:rotate(1.2deg); }
+html.accent-on .feature-visual:not(.memory-visual):not(.proactive-visual):hover,
+html.accent-on .moments-scene:hover,
+html.accent-on .voice-visual:hover{ transform:rotate(0) translateY(-4px); }
+
+/* 贴纸标签 */
+html.accent-on .visual-note,
+html.accent-on .scene-heading > span{
+  color:var(--accent-deep);
+  background:var(--accent-soft);
+  border:1px solid #e7c9b9;
+  border-radius:999px;
+  padding:3px 11px;
+  font-weight:600;
+}
+
+/* 大字描边：数字与序号更硬朗 */
+html.accent-on .feature-index,
+html.accent-on .chapter-number{
+  color:var(--accent-deep);
+  font-weight:700;
+}
+
+/* 价值条：加粗分隔星，强调色 */
+html.accent-on .value-strip .strip-star{ color:var(--accent); }
+
+/* 强调色呼吸脉冲（仅在增强层启用时） */
+@keyframes accent-pulse{
+  0%,100%{ box-shadow:0 6px 16px #d85a3026,inset 0 1px 0 #ffffff40; }
+  50%{ box-shadow:0 8px 22px #d85a303d,inset 0 1px 0 #ffffff40; }
+}
+html.accent-on .hero-actions .button{ animation:accent-pulse 3.6s ease-in-out infinite; }
+
+/* ============ ④ 局部精修 · 角色日程 × 零风空间 ============ */
+/* 说明：experience.css 里本区块被 #preview .xxx 覆盖，此处统一带上 #preview 提权 */
+html.accent-on #preview .daily-heading > p:last-child{
+  font-size:13px;
+  color:#5c6b61;
+  font-weight:500;
+}
+
+/* 两张卡：定位锚点 + 悬浮反馈，内部对比整体加深 */
+html.accent-on #preview .schedule-scene,
+html.accent-on #preview .moments-scene{
+  position:relative;
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s;
+}
+html.accent-on #preview .schedule-scene:hover,
+html.accent-on #preview .moments-scene:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 40px #2b3d3320;
+}
+html.accent-on #preview .scene-heading h4{
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink-deep);
+}
+
+/* 日程卡：时间放大、当前项做成朱砂橘高亮条 */
+html.accent-on #preview .schedule li{
+  padding:13px 14px;
+  border-radius:14px;
+  transition:background .35s;
+}
+html.accent-on #preview .schedule li+li:before{ display:none; }
+html.accent-on #preview .schedule time{
+  font-size:15px;
+  font-weight:600;
+  flex-basis:52px;
+  color:#6b7a70;
+}
+html.accent-on #preview .schedule li>div{
+  border-left-color:#c4d2c6;
+  padding-left:16px;
+}
+html.accent-on #preview .schedule strong{
+  font-size:14px;
+  color:var(--ink-deep);
+}
+html.accent-on #preview .schedule li span{
+  font-size:11px;
+  color:#6f7d72;
+  margin-top:3px;
+}
+html.accent-on #preview .schedule .current{
+  background:var(--accent-soft);
+  box-shadow:inset 3px 0 0 var(--accent),0 6px 18px #d85a3012;
+}
+html.accent-on #preview .schedule .current>div{ border-left-color:transparent; }
+html.accent-on #preview .schedule .current time,
+html.accent-on #preview .schedule .current strong{ color:var(--accent-deep); }
+html.accent-on #preview .schedule .current time{
+  position:relative;
+  padding-left:15px;
+}
+html.accent-on #preview .schedule .current time::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:7px;
+  height:7px;
+  margin-top:-3.5px;
+  border-radius:50%;
+  background:var(--accent);
+  animation:daily-pulse 2s ease-out infinite;
+}
+@keyframes daily-pulse{
+  0%{ box-shadow:0 0 0 0 #d85a3066; }
+  70%{ box-shadow:0 0 0 9px #d85a3000; }
+  100%{ box-shadow:0 0 0 0 #d85a3000; }
+}
+/* 角落水印，让大色块不空 */
+html.accent-on #preview .schedule-scene::after{
+  content:"✳";
+  position:absolute;
+  right:20px;
+  bottom:4px;
+  font-size:82px;
+  line-height:1;
+  color:#d85a3014;
+  pointer-events:none;
+}
+
+/* 动态卡：头像放大、正文引用化、点赞做胶囊按钮 */
+html.accent-on #preview .moment-author{ margin-top:22px; }
+html.accent-on #preview .moment-author>img{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  border:2px solid var(--accent-soft);
+  box-shadow:0 4px 12px #84667822;
+}
+html.accent-on #preview .moment-author strong{
+  font-size:14px;
+  color:var(--ink-deep);
+}
+html.accent-on #preview .moment-author div>span{
+  font-size:10px;
+  color:#8a7b70;
+}
+html.accent-on #preview .moment-text{
+  position:relative;
+  font-size:20px;
+  line-height:1.95;
+  color:#5c4a52;
+  padding:14px 18px 14px 44px;
+  margin:18px 0 16px;
+  background:#ffffff66;
+  border-radius:14px;
+}
+html.accent-on #preview .moment-text::before{
+  content:"“";
+  position:absolute;
+  left:13px;
+  top:0;
+  font-family:var(--serif);
+  font-size:46px;
+  line-height:1.4;
+  color:var(--accent);
+  opacity:.55;
+}
+html.accent-on #preview .moment-reaction{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 15px;
+  border:1px solid #e2b9a6;
+  border-radius:999px;
+  background:#fffdfa;
+  color:var(--accent-deep);
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .25s,color .25s,transform .25s;
+}
+html.accent-on #preview .moment-reaction:hover{
+  background:var(--accent);
+  color:#fff;
+  transform:translateY(-2px);
+}
+html.accent-on #preview .moment-reaction>span{
+  font-size:18px;
+  margin-right:0;
+}
+/* 动态卡右上角的“发现”印章 */
+html.accent-on #preview .moments-scene::after{
+  content:"✳";
+  position:absolute;
+  top:58px;
+  right:26px;
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  font-size:16px;
+  transform:rotate(12deg);
+  box-shadow:0 6px 14px #d85a3040;
+  pointer-events:none;
+}
+html.accent-on #preview .scene-detail{
+  font-size:10px;
+  color:#7a857c;
+  border-top-color:#d8ddd2;
+}
+
+/* ============ ⑤ 排版语言迁移 · 参考图「卡片咬合 + 有机异形 + 手写情绪 + 引言点睛」 ============ */
+
+/* ① 主图：规整拱形 → 有机异形裁切（右上与右下收成不对称曲线） */
+html.accent-on .hero-stage-portrait{
+  border-radius:46% 54% 30% 42% / 38% 40% 34% 40%;
+  box-shadow:0 30px 60px #2b3d3326,0 0 0 7px #fbf8f2,0 0 0 8px #e7e0d4;
+}
+html.accent-on .hero-stage-portrait::after{
+  border-radius:inherit;
+  background:linear-gradient(180deg,transparent 40%,#1f2d2716 68%,#1f2d2780 100%);
+}
+
+/* ② 咬合圆形数据卡：压在主图右上，像参考图的天气圆卡 */
+html.accent-on .hero-stage-orb{
+  position:absolute;
+  z-index:5;
+  top:clamp(12px,2vw,26px);
+  left:3%;
+  transform:rotate(7deg);
+  width:clamp(110px,11vw,150px);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:#fffdf9;
+  border:6px solid #fff;
+  box-shadow:0 16px 36px #2b3d3330,0 0 0 1px #e7e0d4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:8px;
+}
+html.accent-on .hero-stage-orb b{
+  font-family:var(--serif);
+  font-size:clamp(30px,3.2vw,44px);
+  line-height:1;
+  color:var(--accent);
+  font-weight:600;
+}
+html.accent-on .hero-stage-orb span{
+  margin-top:6px;
+  font-size:11px;
+  line-height:1.35;
+  color:#6b7a70;
+}
+
+/* ③ 手写体台词：衬线正体 → 手写斜体，补上情绪温度 */
+html.accent-on .hero-stage-caption span{
+  font-family:var(--serif);
+  letter-spacing:.14em;
+}
+html.accent-on .hero-stage-caption strong{
+  font-family:"Segoe Script","Bradley Hand","STKaiti","Kaiti SC",cursive,var(--serif);
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(24px,2.4vw,30px);
+  letter-spacing:.01em;
+  white-space:nowrap;
+  transform:rotate(-3deg);
+  transform-origin:left center;
+}
+
+/* ⑤ 引言卡：hero-signature 做成参考图那种带圆形箭头的引言条 */
+html.accent-on .hero-signature{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-top:24px;
+  padding:16px 58px 16px 18px;
+  background:#fffdf9;
+  border:1px solid #e8e1d5;
+  border-radius:18px;
+  box-shadow:0 10px 26px #2b3d3312;
+}
+html.accent-on .hero-signature .signature-line{
+  flex:none;
+  width:3px;
+  height:38px;
+  border-radius:3px;
+  background:var(--accent);
+}
+html.accent-on .hero-signature p{
+  margin:0;
+  font-family:var(--serif);
+  font-size:15px;
+  line-height:1.7;
+  color:#6b7a70;
+}
+html.accent-on .hero-signature strong{
+  color:var(--ink-deep);
+  font-weight:500;
+}
+html.accent-on .hero-signature::after{
+  content:"↗";
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  border:1px solid #e7c9b9;
+  color:var(--accent-deep);
+  display:grid;
+  place-items:center;
+  font-size:17px;
+}
+
+/* ============ ⑥ 全站卡片语言统一 · 白色厚边 + 咬合叠压 + 有机圆角 ============ */
+/* 参考图精髓：卡片不再是贴背景的薄框，而是有厚白边、柔和投影、互相咬合的实体卡 */
+
+/* 基底：所有主视觉卡统一厚白边 + 有机圆角 + 抬升投影 */
+html.accent-on .feature-visual,
+html.accent-on .schedule-scene,
+html.accent-on .moments-scene,
+html.accent-on .voice-visual,
+html.accent-on .download-panel,
+html.accent-on .faq-list{
+  background:#fffefb;
+  border:6px solid #fff;
+  box-shadow:0 18px 44px #2b3d3320,0 2px 6px #2b3d3310,0 0 0 1px #e9e3d7;
+}
+
+/* 有机圆角：四角不等，参考图那种手工卡片感 */
+html.accent-on .memory-visual{ border-radius:34px 26px 38px 24px / 28px 36px 26px 34px; }
+html.accent-on .proactive-visual{ border-radius:26px 36px 24px 38px / 36px 26px 34px 26px; }
+html.accent-on .schedule-scene{ border-radius:30px 24px 32px 26px / 26px 32px 24px 30px; }
+html.accent-on .moments-scene{ border-radius:24px 32px 26px 34px / 32px 26px 30px 26px; }
+html.accent-on .voice-visual{ border-radius:36px 28px 30px 26px / 30px 34px 26px 32px; }
+html.accent-on .download-panel{ border-radius:34px 30px 38px 28px / 32px 38px 28px 34px; }
+html.accent-on .faq-list{ border-radius:30px 26px 32px 28px / 28px 32px 26px 30px; }
+
+/* 咬合叠压：相邻卡片轻微位移，形成参考图那种互相压住的纵深 */
+html.accent-on .proactive-feature .feature-visual{ transform:translateY(-14px) rotate(1deg); }
+html.accent-on .daily-scenes{ display:grid; gap:0; align-items:start; }
+html.accent-on .daily-scenes .moments-scene{ transform:translate(-26px,26px) rotate(-1.2deg); }
+html.accent-on .daily-scenes .schedule-scene{ transform:rotate(1deg); }
+html.accent-on .daily-note{ margin-top:52px; }
+
+/* 内部小卡也厚边化，强化层次 */
+html.accent-on .memory-sheet,
+html.accent-on .notification,
+html.accent-on .voice-bubble{
+  background:#fffdf9;
+  border:3px solid #fff;
+  box-shadow:0 10px 26px #2b3d3322,0 0 0 1px #eee7da;
+  border-radius:22px 18px 24px 20px / 20px 24px 18px 22px;
+}
+
+/* 场景标签做成参考图的胶囊贴纸 */
+html.accent-on .visual-note,
+html.accent-on .scene-heading > span,
+html.accent-on .aside-label{
+  background:var(--accent-soft);
+  border:1px solid #e7c9b9;
+  color:var(--accent-deep);
+  border-radius:999px;
+  padding:4px 13px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.04em;
+}
+
+/* 圆形箭头按钮：资源卡 / FAQ 展开 / 下载引导统一成参考图圆形箭头 */
+html.accent-on .resources > a,
+html.accent-on .role-poster-hint{
+  transition:transform .3s;
+}
+html.accent-on .resources > a > span:last-child{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  border:1px solid #e7c9b9;
+  color:var(--accent-deep);
+  display:grid;
+  place-items:center;
+  font-size:16px;
+  flex:none;
+}
+html.accent-on .resources > a:hover{ transform:translateY(-3px); }
+html.accent-on .resources > a:hover > span:last-child{ background:var(--accent); color:#fff; }
+
+/* 价值条：四段信息做成参考图那种咬合白色胶囊条 */
+html.accent-on .value-strip{
+  background:#fffdf9;
+  border:5px solid #fff;
+  box-shadow:0 12px 30px #2b3d3318,0 0 0 1px #e9e3d7;
+  border-radius:26px 22px 28px 24px / 24px 28px 22px 26px;
+  padding:18px 24px;
+}
+
+/* 下载区安装步骤：序号做成圆形徽章 */
+html.accent-on .install-steps li > span{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  border:1px solid #e7c9b9;
+  color:var(--accent-deep);
+  display:grid;
+  place-items:center;
+  font-family:var(--serif);
+  font-size:16px;
+  font-weight:600;
+  flex:none;
+}
+
+/* FAQ：每条细节做成白色厚边小卡，展开态朱砂橘描边 */
+html.accent-on .faq-list details{
+  background:#fffdf9;
+  border:3px solid #fff;
+  border-radius:20px 16px 22px 18px / 18px 22px 16px 20px;
+  box-shadow:0 6px 18px #2b3d330e,0 0 0 1px #efe9dd;
+  margin:14px 0;
+  padding:0 20px;
+}
+html.accent-on .faq-list details[open]{
+  border-color:var(--accent-soft);
+  box-shadow:0 12px 28px #d85a3018,0 0 0 1px #e7c9b9;
+}
+
+/* 角色海报：简洁设计，无需厚边 */
+html.accent-on .role-poster{
+  border:none !important;
+  border-radius:24px;
+  box-shadow:0 18px 44px #2b3d3320;
+  transform:none;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;
+}
+html.accent-on .role-poster:hover{
+  border:none !important;
+  transform:translateY(-4px);
+  box-shadow:0 24px 56px #2b3d3328;
+}
+
+/* 章节引言补充手写斜体情绪点 */
+html.accent-on .section-heading > p:last-child,
+html.accent-on .role-showcase-copy > p:not(.eyebrow){
+  font-family:var(--serif);
+  font-style:italic;
+}
+
+/* ============ ⑦ 可读性修复：浅灰细字放大加深 ============ */
+/* 功能场景卡（记忆/通知/语音）内的说明文字：字号偏小、颜色偏浅，读不清 */
+html.accent-on #preview .sheet-heading span{ font-size:12px; color:#3d5260; }
+html.accent-on #preview .memory-tags span{
+  font-size:12px; color:#4a6072; padding:5px 10px;
+  background:#e4edf4; border-color:#d3e0ec;
+}
+html.accent-on #preview .sheet-bottom{ font-size:13px; color:#4a5c6e; line-height:1.7; }
+html.accent-on #preview .sheet-bottom strong{ font-size:13px; color:#345268; font-weight:600; }
+html.accent-on #preview .sheet-quote{ font-size:22px; }
+html.accent-on #preview .feature-visual .visual-note{ font-size:12px; }
+html.accent-on #preview .feature-visual .visual-caption{ font-size:12px; color:#3f574a; }
+html.accent-on #preview .scene-detail{ font-size:12px; color:#55655a; }
+html.accent-on #preview .quick-time,
+html.accent-on #preview .quiet-time{ font-size:12px; color:#5a4632; }
+html.accent-on #preview .quiet-time span{ font-size:12px; color:#5a4632; }
+html.accent-on #preview .rhythm-note p{ font-size:12px; color:#4a5c6e; }
+html.accent-on #preview .rhythm-note p strong{ font-size:12px; color:#3f5262; font-weight:600; }
+html.accent-on #preview .notification p{ font-size:13px; color:#3f5262; }
+html.accent-on #preview .notification-head span{ font-size:11px; color:#5a6b7d; }
+html.accent-on #preview .voice-transcript summary{ font-size:11px; }
+/* 下载提示 / 价值条：全局最小的两处字 */
+html.accent-on .download-hint{ font-size:12px; color:#5a6b78; }
+html.accent-on .value-strip span{ font-size:12px; color:#4c5f52; }
+html.accent-on .hero-note,
+html.accent-on .hero-phone-note{ font-size:12px; color:#526158; }
+/* FAQ 答案与安装步骤说明 */
+html.accent-on #preview .faq-section details p{ font-size:13px; color:#46584e; }
+html.accent-on #preview .install-steps li span{ font-size:12px; color:#4a5b51; }
+
+/* ============ ⑧ 矮视口首屏适配：保证开屏文字完整落在折叠线内 ============ */
+/* 笔记本/带任务栏窗口常见高度 720–820px：压缩首屏纵向节奏，不牺牲任何文案 */
+@media (max-height:820px) and (min-width:651px){
+  html.accent-on .hero{ padding-top:14px; }
+  html.accent-on .hero-layout{ align-items:center; }
+  html.accent-on .hero .eyebrow{ margin-top:2px; }
+  html.accent-on .hero h1{
+    font-size:clamp(46px,4.2vw,64px);
+    line-height:1.12;
+    margin:14px 0 12px;
+  }
+  html.accent-on .hero-description{
+    font-size:14px;
+    line-height:1.75;
+  }
+  html.accent-on .hero-actions{ margin-top:20px; }
+  html.accent-on .hero-actions .button{ min-height:48px; }
+  html.accent-on .hero-note{ margin-top:11px; }
+  html.accent-on .hero-metrics{ margin-top:16px; }
+  html.accent-on .hero-metric b{ font-size:clamp(34px,3.4vw,48px); }
+  html.accent-on .hero-metric span{ font-size:12px; }
+  html.accent-on .hero-signature{ margin-top:14px; padding:12px 42px 12px 14px; }
+  html.accent-on .hero-signature p{ font-size:13px; line-height:1.6; }
+  html.accent-on .hero-signature strong{ font-size:18px; }
+  /* 引言卡底缘不再顶出视口 */
+  html.accent-on .hero-stage-caption{ bottom:86px; }
+}
+/* 极矮视口 <740px：再收一档，宁可紧凑也要文字完整 */
+@media (max-height:740px) and (min-width:651px){
+  html.accent-on .hero h1{ font-size:clamp(42px,3.8vw,56px); margin:10px 0 9px; }
+  html.accent-on .hero-description{ font-size:13px; line-height:1.65; }
+  html.accent-on .hero-actions{ margin-top:15px; }
+  html.accent-on .hero-metrics{ margin-top:12px; }
+  html.accent-on .hero-signature{ margin-top:10px; }
+}
+
+/* 响应式 */
+@media (max-width:1100px){
+  html.accent-on .hero-stage-portrait{ transform:translateX(-54%); width:min(380px,80%); }
+  html.accent-on .hero-phone-viewport{ --phone-scale:.56; right:-2%; }
+}
+@media (max-width:850px){
+  html.accent-on .hero h1{ font-size:clamp(44px,7vw,60px); }
+  html.accent-on .hero-phone-demo{ min-height:520px; }
+  html.accent-on .hero-stage-portrait{ width:min(340px,76%); transform:translateX(-56%); }
+  html.accent-on .hero-phone-viewport{ --phone-scale:.52; }
+  html.accent-on .hero-stage-caption strong{ font-size:25px; }
+}
+@media (max-width:650px){
+  html.accent-on .hero h1{ font-size:clamp(40px,10vw,54px); line-height:1.2; }
+  html.accent-on .hero-metric b{ font-size:clamp(30px,8vw,40px); }
+  html.accent-on .hero-phone-demo{ min-height:540px; margin-top:8px; }
+  html.accent-on .hero-stage-portrait{ width:74%; left:52%; transform:translateX(-50%); }
+  html.accent-on .hero-stage-badge{ right:-8px; top:12px; font-size:11px; }
+  html.accent-on .hero-stage-orb{ top:6px; left:0; transform:rotate(7deg); width:96px; }
+  html.accent-on .hero-stage-caption{ left:0; bottom:72px; max-width:44%; }
+  html.accent-on .hero-phone-viewport{ --phone-scale:.62; right:0; bottom:30px; }
+  html.accent-on .hero-phone-note{ max-width:52%; font-size:10px; }
+  html.accent-on .hero-metrics{ margin-top:22px; }
+  html.accent-on .hero-signature{ padding:14px 50px 14px 14px; gap:12px; }
+  html.accent-on .hero-signature p{ font-size:13px; }
+}
+@media (max-width:850px){
+  html.accent-on #preview .moment-text{ font-size:18px; padding-left:40px; }
+  html.accent-on #preview .moments-scene::after{ top:52px; right:20px; }
+  /* 窄屏取消咬合位移，避免横向溢出 */
+  html.accent-on .proactive-feature .feature-visual,
+  html.accent-on .daily-scenes .moments-scene,
+  html.accent-on .daily-scenes .schedule-scene,
+  html.accent-on .role-poster{ transform:none; }
+  html.accent-on .role-poster:hover{ transform:translateY(-4px); }
+  html.accent-on .daily-scenes{ gap:22px; }
+  html.accent-on .daily-note{ margin-top:18px; }
+  html.accent-on .feature-visual,
+  html.accent-on .schedule-scene,
+  html.accent-on .moments-scene,
+  html.accent-on .voice-visual,
+  html.accent-on .download-panel,
+  html.accent-on .faq-list,
+  html.accent-on .value-strip{ border-width:4px; }
+  html.accent-on .role-poster{ border:none !important; }
+}
+@media (max-width:650px){
+  html.accent-on #preview .schedule strong{ font-size:13px; }
+  html.accent-on #preview .schedule time{ font-size:14px; flex-basis:46px; }
+  html.accent-on #preview .schedule li{ padding:11px 10px; }
+  html.accent-on #preview .schedule li span{ font-size:10px; }
+  html.accent-on #preview .moment-text{ font-size:16px; line-height:1.9; padding:12px 14px 12px 36px; }
+  html.accent-on #preview .moment-text::before{ font-size:38px; left:10px; }
+  html.accent-on #preview .moment-author>img{ width:44px; height:44px; }
+  html.accent-on #preview .schedule-scene::after{ font-size:60px; }
+  html.accent-on #preview .moments-scene::after{ width:28px; height:28px; font-size:13px; top:50px; right:18px; }
+}
+@media (max-width:420px){
+  html.accent-on .hero-stage-portrait{ width:78%; }
+  html.accent-on .hero-phone-viewport{ --phone-scale:.58; right:0; }
+  html.accent-on .hero-stage-caption strong{ font-size:22px; }
+  html.accent-on .hero-stage-orb{ width:84px; border-width:4px; }
+  html.accent-on #preview .moment-text{ font-size:15px; }
+}
+
+/* ============ 降级：尊重 reduced-motion ============ */
+@media (prefers-reduced-motion:reduce){
+  html.accent-on .hero-actions .button{ animation:none; }
+  html.accent-on #preview .schedule .current time::before{ animation:none; }
+  html.accent-on .feature-visual,
+  html.accent-on .moments-scene,
+  html.accent-on .schedule-scene,
+  html.accent-on .voice-visual{ transition:none; }
+  html.accent-on #preview .schedule-scene:hover,
+  html.accent-on #preview .moments-scene:hover{ transform:none; }
+  html.accent-on .hero-stage-caption strong,
+  html.accent-on .hero-stage-orb{ transform:none; }
+  html.accent-on .proactive-feature .feature-visual,
+  html.accent-on .daily-scenes .moments-scene,
+  html.accent-on .daily-scenes .schedule-scene,
+  html.accent-on .role-poster,
+  html.accent-on .resources > a{ transition:none; transform:none; }
+  html.accent-on .role-poster:hover,
+  html.accent-on .resources > a:hover{ transform:none; }
+  html.accent-on .role-poster{ border:none !important; }
+}

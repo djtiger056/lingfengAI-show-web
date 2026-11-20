@@ -1,0 +1,262 @@
+/* Clearer editorial type scale for the public landing page. */
+body {
+  font-size: 16px;
+}
+
+html.luxe-on .hero h1 {
+  font-size: 88px;
+  font-weight: 700;
+  line-height: 1.16;
+}
+
+.hero-description {
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+html.luxe-on .section-heading h2,
+html.luxe-on #screens-title,
+html.luxe-on .faq-intro h2,
+html.luxe-on .download-main h2 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+html.luxe-on .section-heading > p,
+html.luxe-on #preview .feature-copy > p:not(.feature-index):not(.fine-print),
+html.luxe-on #preview .daily-heading > p:not(.feature-index),
+html.luxe-on #preview .voice-copy > p:not(.feature-index):not(.fine-print),
+html.luxe-on .role-showcase-copy > p:not(.eyebrow),
+html.luxe-on .faq-intro > p:not(.eyebrow),
+html.luxe-on .download-main > p:not(.eyebrow):not(.download-hint):not(.platform-note):not(.legal-download-note),
+html.luxe-on .download-aside .credits-note > p,
+html.luxe-on .resources > div > p {
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+html.luxe-on #preview .feature-copy h3,
+html.luxe-on #preview .daily-heading h3,
+html.luxe-on #preview .voice-copy h3,
+html.luxe-on .credits-note h3,
+html.luxe-on .resources h3 {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.capability-list,
+.voice-capabilities,
+.faq-list,
+.install-steps,
+.resources > a,
+.site-footer .footer-links {
+  font-size: 16px;
+}
+
+html.luxe-on .faq-list summary {
+  font-size: 18px;
+}
+
+html.luxe-on .faq-list details p,
+html.luxe-on .install-steps p,
+html.luxe-on .credits-note ul {
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+#preview .voice-visual.voice-audio-card {
+  min-height: 0;
+  padding: 16px;
+  aspect-ratio: auto;
+  overflow: visible;
+  background: #fffefb;
+  border-radius: 22px;
+}
+
+.voice-audio-play {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 16px;
+  overflow: hidden;
+  border: 1px solid #d5e2d1;
+  border-radius: 16px;
+  background: #edf3e9;
+  color: #3e5948;
+  text-align: left;
+  cursor: pointer;
+}
+
+.voice-audio-play:hover { background: #e5eddf; }
+.voice-audio-play:focus-visible { outline: 3px solid #a63e2b; outline-offset: 4px; }
+.voice-audio-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #bd4423;
+  color: #fff;
+}
+.voice-audio-icon svg { width: 22px; height: 22px; }
+.voice-icon-pause { display: none; }
+.voice-audio-play[aria-pressed="true"] .voice-icon-play { display: none; }
+.voice-audio-play[aria-pressed="true"] .voice-icon-pause { display: block; }
+.voice-audio-content { display: grid; gap: 7px; flex: 1; min-width: 0; }
+.voice-audio-label { font-size: 15px; font-weight: 600; line-height: 1.5; }
+.voice-audio-wave { display: flex; align-items: center; gap: 3px; height: 20px; }
+.voice-audio-wave i { display: block; width: 3px; height: 7px; border-radius: 3px; background: #819d8b; }
+.voice-audio-wave i:nth-child(3n) { height: 19px; }
+.voice-audio-wave i:nth-child(4n) { height: 13px; }
+.voice-audio-wave i:nth-child(5n) { height: 10px; }
+.voice-audio-play[aria-pressed="true"] .voice-audio-wave i { background: #bd4423; animation: daily-voice-pulse .65s ease-in-out infinite alternate; }
+.voice-audio-wave i:nth-child(3n) { animation-delay: -.3s; }
+.voice-audio-wave i:nth-child(4n) { animation-delay: -.5s; }
+.voice-audio-duration { flex-shrink: 0; font-size: 15px; font-variant-numeric: tabular-nums; }
+.voice-audio-progress { position: absolute; inset: auto 0 0; height: 3px; background: #bd4423; transform: scaleX(0); transform-origin: left; }
+@keyframes daily-voice-pulse { to { transform: scaleY(.45); } }
+@media (prefers-reduced-motion: reduce) { .voice-audio-play .voice-audio-wave i { animation: none; } }
+
+.voice-audio-caption {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  margin-top: 16px;
+  text-align: left;
+}
+
+.voice-audio-caption strong {
+  color: #293b34;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.voice-audio-caption span {
+  color: #59685f;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+html.luxe-on .faq-list summary > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+html.luxe-on .resources > a:hover > span:last-child {
+  transform: none;
+}
+
+@media (max-width: 850px) {
+  html.luxe-on .hero h1 {
+    font-size: 64px;
+  }
+
+  html.luxe-on .section-heading h2,
+  html.luxe-on #screens-title,
+  html.luxe-on .faq-intro h2,
+  html.luxe-on .download-main h2 {
+    font-size: 48px;
+  }
+
+  html.luxe-on #preview .feature-copy h3,
+  html.luxe-on #preview .daily-heading h3,
+  html.luxe-on #preview .voice-copy h3,
+  html.luxe-on .credits-note h3,
+  html.luxe-on .resources h3 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 650px) {
+  html.luxe-on .hero h1 {
+    font-size: 50px;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  html.luxe-on .section-heading h2,
+  html.luxe-on #screens-title,
+  html.luxe-on .faq-intro h2,
+  html.luxe-on .download-main h2 {
+    font-size: 38px;
+    line-height: 1.38;
+  }
+
+  html.luxe-on .section-heading > p,
+  html.luxe-on #preview .feature-copy > p:not(.feature-index):not(.fine-print),
+  html.luxe-on #preview .daily-heading > p:not(.feature-index),
+  html.luxe-on #preview .voice-copy > p:not(.feature-index):not(.fine-print),
+  html.luxe-on .role-showcase-copy > p:not(.eyebrow),
+  html.luxe-on .faq-intro > p:not(.eyebrow),
+  html.luxe-on .download-main > p:not(.eyebrow):not(.download-hint):not(.platform-note):not(.legal-download-note),
+  html.luxe-on .download-aside .credits-note > p,
+  html.luxe-on .resources > div > p {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  html.luxe-on #preview .feature-copy h3,
+  html.luxe-on #preview .daily-heading h3,
+  html.luxe-on #preview .voice-copy h3,
+  html.luxe-on .credits-note h3,
+  html.luxe-on .resources h3 {
+    font-size: 32px;
+    line-height: 1.42;
+  }
+
+  html.luxe-on .faq-list summary {
+    font-size: 16px;
+  }
+
+  #preview .voice-visual.voice-audio-card {
+    padding: 12px;
+  }
+
+  .voice-audio-caption {
+    margin-top: 13px;
+  }
+
+  .voice-audio-caption strong {
+    font-size: 18px;
+  }
+
+  .voice-audio-caption span {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 360px) {
+  html.luxe-on .hero h1 {
+    font-size: 46px;
+  }
+
+  html.luxe-on .section-heading h2,
+  html.luxe-on #screens-title,
+  html.luxe-on .faq-intro h2,
+  html.luxe-on .download-main h2 {
+    font-size: 35px;
+  }
+
+  html.luxe-on #preview .feature-copy h3,
+  html.luxe-on #preview .daily-heading h3,
+  html.luxe-on #preview .voice-copy h3,
+  html.luxe-on .credits-note h3,
+  html.luxe-on .resources h3 {
+    font-size: 29px;
+  }
+}
