@@ -982,6 +982,7 @@ html.accent-on.luxe-on #preview .sheet-quote {
   html.accent-on.luxe-on .hero-phone-demo {
     min-height: 0;
     margin-top: 20px;
+    padding-top: 76px;
     animation: none !important;
     transform: none;
   }
@@ -993,7 +994,7 @@ html.accent-on.luxe-on #preview .sheet-quote {
     width: min(360px, calc(100% - 20px));
     height: auto;
     aspect-ratio: 1 / 2;
-    margin: 82px 10px 0 auto;
+    margin: 0 10px 0 auto;
     transform: none;
     transition: none;
   }
@@ -1004,7 +1005,23 @@ html.accent-on.luxe-on #preview .sheet-quote {
     height: 100%;
     transform: none;
   }
-  html.accent-on.luxe-on .hero-stage-portrait { top: 82px; }
+  html.accent-on.luxe-on .hero-stage-portrait { top: 188px; }
+  html.accent-on.luxe-on .hero-role-switch-hint,
+  html.accent-on.luxe-on .hero-role-picker {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+  html.accent-on.luxe-on .hero-role-switch-hint { margin: 0 0 10px 10px; }
+  html.accent-on.luxe-on .hero-role-picker {
+    width: max-content;
+    margin: 0 0 22px 10px;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+  html.accent-on.luxe-on .hero-role-picker-label { display: none; }
   html.accent-on.luxe-on .hero-stage-orb { top: 0; left: 4px; width: 64px; padding: 4px; transform: none; }
   html.accent-on.luxe-on .hero-stage-orb b { font-size: 28px; }
   html.accent-on.luxe-on .hero-stage-orb span { margin-top: 2px; font-size: 10px; white-space: nowrap; }
@@ -1056,5 +1073,30 @@ html.accent-on.luxe-on #preview .sheet-quote {
 
   html.luxe-on .button::after {
     animation: none;
+  }
+}
+
+/* Touch devices have less compositor headroom; keep the layout and interactions,
+   but avoid continuously repainting decorative layers and blurred surfaces. */
+@media (hover: none), (pointer: coarse) {
+  html.luxe-on .site-atmosphere .wind-field,
+  html.luxe-on .site-atmosphere .wind-field * {
+    animation: none !important;
+  }
+  html.luxe-on .site-atmosphere .wind-field {
+    transform: none !important;
+    transition: none !important;
+  }
+  html.luxe-on .hero-phone-viewport {
+    transform: none !important;
+    transition: none !important;
+  }
+  html.luxe-on .feature-visual,
+  html.luxe-on .moments-scene,
+  html.luxe-on .schedule-scene,
+  html.luxe-on .voice-visual,
+  html.luxe-on .download-panel {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

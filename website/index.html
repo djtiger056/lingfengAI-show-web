@@ -18,7 +18,8 @@
   <link rel="stylesheet" href="./css/luxe.css" />
   <link rel="stylesheet" href="./css/role-carousel.css" />
   <link rel="stylesheet" href="./css/typography.css" />
-  <script src="./js/main.js" defer></script>
+  <link rel="stylesheet" href="./css/qq-group.css?v=floating-group-20261123" />
+  <script src="./js/main.js?v=floating-group-20261123" defer></script>
   <script src="./js/wind.js" defer></script>
   <script src="./js/role-carousel.js" defer></script>
   <script src="./js/motion.js" defer></script>
@@ -109,12 +110,18 @@
           <div class="hero-signature"><span class="signature-line"></span><p>相知的分量，<br /><strong>藏在被记起的寻常里。</strong></p></div>
         </div>
         <div class="hero-phone-demo" id="heroStage" role="group" aria-label="手机中的日常聊天，展示图片、语音和记忆">
-          <figure class="hero-stage-portrait"><img src="./assets/avatars/shen-yu.webp" alt="零风AI 角色 沈屿" width="580" height="768" fetchpriority="high" /></figure>
+          <button type="button" class="hero-stage-portrait" id="heroRoleToggle" aria-label="切换角色，当前为林莹莹" title="点击头像切换角色"><img src="./assets/avatars/lin-yingying.webp" alt="零风AI 角色 林莹莹" width="580" height="768" fetchpriority="high" /></button>
+          <div class="hero-role-switch-hint" aria-hidden="true"><span>↻</span> 选择头像切换角色</div>
           <div class="hero-stage-orb" aria-hidden="true"><b>∞</b><span>记得每句话</span></div>
-          <figcaption class="hero-stage-caption"><span>官方角色 · 沈屿</span><strong>「好久不见。」</strong></figcaption>
+          <figcaption class="hero-stage-caption"><span>官方角色 · 林莹莹</span><strong>「今天有点累，刚到家。」</strong></figcaption>
+          <div class="hero-role-picker" role="group" aria-label="选择演示角色">
+            <span class="hero-role-picker-label">选择角色</span>
+            <button type="button" class="hero-role-option" data-hero-role="1" aria-label="选择林莹莹" title="选择林莹莹" aria-pressed="true"><img src="./assets/avatars/lin-yingying.webp" alt="" width="48" height="48" /></button>
+            <button type="button" class="hero-role-option" data-hero-role="0" aria-label="选择沈屿" title="选择沈屿" aria-pressed="false"><img src="./assets/avatars/shen-yu.webp" alt="" width="48" height="48" /></button>
+          </div>
           <div class="hero-phone-viewport">
             <span class="hero-stage-badge" aria-hidden="true">记得你的喜好</span>
-            <iframe class="hero-phone-frame" src="./previews/phone-demo/index.html?embed=1" title="零风AI 手机聊天演示，可查看图片、播放语音和切换角色" width="450" height="860"></iframe>
+            <iframe class="hero-phone-frame" src="./previews/phone-demo/index.html?embed=1&amp;role=1" title="零风AI 手机聊天演示，可查看图片、播放语音和切换角色" width="450" height="860"></iframe>
           </div>
           <p class="hero-phone-note">聊起日常，自然有话分享。<span>图片、语音与过往记忆为演示素材。</span></p>
         </div>
@@ -130,7 +137,7 @@
         </nav>
         <article class="feature-row memory-feature" id="memory" aria-labelledby="memory-title">
           <div class="feature-copy"><p class="feature-index">01 / 长期记忆</p><h3 id="memory-title">聊过的小事，<br />下次还能<span class="blue-text">接着说。</span></h3><p>整理对话中的重要信息，在之后的交流中找回相关记忆。你的喜好、经历和共同话题，让每次见面多一点熟悉。</p><ul class="capability-list"><li>按角色查看、管理记忆</li><li>导出备份，也能导入恢复</li></ul><p class="fine-print">记忆可能有遗漏或偏差，可在 App 内查看和管理。</p></div>
-          <div class="feature-visual memory-visual" aria-label="长期记忆功能场景示例"><span class="visual-note">场景示例</span><div class="memory-sheet"><div class="sheet-heading"><span>关于你的记忆</span><span aria-hidden="true">✳</span></div><p class="sheet-quote">“喜欢不加糖的拿铁。”</p><div class="memory-tags"><span>饮食偏好</span><span>沈屿的记忆</span></div><div class="sheet-divider"></div><p class="sheet-bottom">从对话里整理，<br /><strong>在下一次交流中想起。</strong></p></div><span class="visual-caption">记得一些小事，相处就近了一点。</span></div>
+          <div class="feature-visual memory-visual" aria-label="长期记忆功能场景示例"><span class="visual-note">场景示例</span><div class="memory-sheet"><div class="sheet-heading"><span>关于你的记忆</span><span aria-hidden="true">✳</span></div><p class="sheet-quote">“喜欢少冰、三分糖的奶茶。”</p><div class="memory-tags"><span>饮食偏好</span><span>林莹莹的记忆</span></div><div class="sheet-divider"></div><p class="sheet-bottom">从对话里整理，<br /><strong>在下一次交流中想起。</strong></p></div><span class="visual-caption">记得一些小事，相处就近了一点。</span></div>
         </article>
         <article class="feature-row proactive-feature" id="proactive" aria-labelledby="proactive-title">
           <div class="feature-copy"><p class="feature-index">02 / 主动消息</p><h3 id="proactive-title">有些问候，<br />由 <span class="rose-text">Ta 先开口。</span></h3><p>启用主动消息后，Ta 可以接着之前的话题聊，也可以在闲时发来问候。相处有来有回，不必每次都由你开启话题。</p><ul class="capability-list"><li>话题延续与闲时问候</li><li>主动频率、每日上限可调</li></ul><p class="fine-print">需启用相关设置。后台送达受系统权限、网络与运行状态影响。</p></div>
@@ -140,7 +147,7 @@
           <div class="daily-heading"><p class="feature-index">03 / 角色日程 × 零风空间</p><h3 id="daily-title">聊天之外，<span class="blue-text">也有日常可分享。</span></h3><p>看看 Ta 的一天，也把你的一天分享给 Ta。<br />从「在做什么」到「今天发生了什么」，有更多可以聊的话题。</p></div>
           <div class="daily-scenes">
             <article class="schedule-scene"><div class="scene-heading"><h4>Ta 的一天，有自己的安排</h4><span>日程示例</span></div><ol class="schedule"><li><time>09:00</time><div><strong>去图书馆找一本书</strong><span>给自己留一段安静的时间</span></div></li><li class="current"><time>15:30</time><div><strong>窗边读书，喝一杯咖啡</strong><span>沈屿 · 当前安排示例</span></div></li><li><time>19:00</time><div><strong>散散步，聊聊今天</strong><span>普通的日子，也有小事可分享</span></div></li></ol><p class="scene-detail">每日计划 / 临时状态 / 历史日程</p></article>
-            <article class="moments-scene"><div class="scene-heading"><h4>把日常，发进零风空间</h4><span>动态示例</span></div><div class="moment-author"><img src="./assets/avatars/shen-yu.webp" alt="" width="44" height="44" loading="lazy" /><div><strong>沈屿</strong><span>分享一个今天的小发现</span></div></div><p class="moment-text">绕了点远路回家，<br />发现街角的花又开了。<br />今天也有值得开心的小事。</p><div class="moment-reaction"><span aria-hidden="true">♡</span> 点赞、评论，让话题继续</div><p class="scene-detail">发布动态 / 点赞评论 / 角色日常</p></article>
+            <article class="moments-scene"><div class="scene-heading"><h4>把日常，发进零风空间</h4><span>动态示例</span></div><div class="moment-author"><img src="./assets/avatars/lin-yingying.webp" alt="" width="44" height="44" loading="lazy" /><div><strong>林莹莹</strong><span>分享一个今天的小发现</span></div></div><p class="moment-text">绕了点远路回家，<br />发现街角的花又开了。<br />今天也有值得开心的小事。</p><div class="moment-reaction"><span aria-hidden="true">♡</span> 点赞、评论，让话题继续</div><p class="scene-detail">发布动态 / 点赞评论 / 角色日常</p></article>
           </div>
           <p class="fine-print daily-note">日程和角色生成的动态均为虚构设定，用于陪伴互动，不代表现实活动。</p>
         </div>
@@ -175,13 +182,13 @@
           <p class="eyebrow"><span class="chapter-number">02</span> 相伴日常</p>
           <h2 id="screens-title">相逢各有模样，<br /><span class="blue-text">相知从此开始。</span></h2>
           <p>在角色广场，认识不同性情的 Ta。<br />挑一位聊得来的，让故事从一句你好开始。</p>
-          <a class="role-poster-hint" href="./assets/companionship-roles.webp" target="_blank" rel="noopener">放大查看当前照片 <span aria-hidden="true">↗</span></a>
+          <a class="role-poster-hint" href="./assets/companionship-roles-new.webp" target="_blank" rel="noopener">放大查看当前照片 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="role-carousel" role="region" aria-roledescription="轮播图" aria-label="零风陪伴日常" data-index="0">
           <div class="role-carousel-viewport" id="roleCarouselViewport">
             <div class="role-carousel-track">
-              <a class="role-poster role-slide" href="./assets/companionship-roles.webp" target="_blank" rel="noopener" aria-label="第 1 张，共 2 张：放大查看角色广场" data-title="角色广场">
-                <img src="./assets/companionship-roles.webp" alt="你想遇见怎样的 TA？不同性格的角色与角色广场展示" width="720" height="1280" loading="lazy" decoding="async" draggable="false" />
+              <a class="role-poster role-slide" href="./assets/companionship-roles-new.webp" target="_blank" rel="noopener" aria-label="第 1 张，共 2 张：放大查看角色广场" data-title="角色广场">
+                <img src="./assets/companionship-roles-new.webp" alt="你想遇见怎样的 TA？不同性格的角色与角色广场展示" width="720" height="1280" loading="lazy" decoding="async" draggable="false" />
               </a>
               <a class="role-poster role-slide" href="./assets/companionship-memory.webp" target="_blank" rel="noopener" aria-label="第 2 张，共 2 张：放大查看相伴记忆" data-title="相伴记忆" aria-hidden="true" inert>
                 <img src="./assets/companionship-memory.webp" alt="你说过的话，TA 都记得：关于拿铁、宠物和一起看过的风景的相伴记忆" width="2160" height="3840" loading="lazy" decoding="async" draggable="false" />
@@ -218,11 +225,17 @@
 
     <section class="download-section section" id="download" aria-labelledby="download-title"><div class="container"><div class="download-panel"><div class="download-main"><p class="eyebrow">公测版已发布，现在就开始</p><div class="download-brand"><img src="./assets/logo.jpg" alt="零风AI 应用图标" width="64" height="64" /><span>零风 AI<small>Android · 公测版</small></span></div><h2 id="download-title">下一句「在吗」，<br /><span class="rose-text">从这里开始。</span></h2><p>公测版已发布，欢迎下载体验。<br />现在就认识一个聊得来的 Ta。</p><a class="button" id="apkDownload" href="https://www.vyuyun.com/apiv1/api/linkurljump/5lRwhJ/CA3cfrHury8HPBTw5MrYEIMd1mZxO--taWFRN_ooTE4*" target="_blank" rel="noopener noreferrer">下载安卓公测版 <span aria-hidden="true">↓</span></a><p class="download-hint">前往下载页获取 APK · 公测版已发布</p><p class="platform-note">iOS / Web 尚未开放</p><p class="legal-download-note">本服务仅面向年满 18 周岁的用户。注册和使用前，请阅读<a href="./terms/index.html">《用户协议》</a>与<a href="./privacy/index.html">《隐私政策》</a>。</p></div><div class="download-aside"><div class="credits-note" id="beta"><span class="aside-label">关于公测与积分</span><h3>直接开始，<br />无需自己配置 API。</h3><p>普通用户使用官方 AI 服务。公测赠送一定体验积分，相关 AI 服务按规则消耗积分，赠送额度及使用规则以 App 内说明为准。</p></div><ol class="install-steps"><li><span>01</span><div><strong>下载并安装</strong><p>获取 APK，按系统提示允许安装。</p></div></li><li><span>02</span><div><strong>登录，查看积分</strong><p>在 App 内确认体验额度和使用规则。</p></div></li><li><span>03</span><div><strong>选择角色，开始聊天</strong><p>按自己的节奏，慢慢熟悉。</p></div></li></ol></div></div><div class="resources"><div><h3>客户端资源</h3><p>下载后按 App 内说明导入使用。</p></div><a href="https://www.vyuyun.com/apiv1/api/linkurljump/xZ8EHo/NaeWZpU7lgAqUxeNXuZYaq-yi3zUff7mV70HzTi26_M*" target="_blank" rel="noopener noreferrer"><span>完整版表情包<small>ZIP 资源包</small></span><span aria-hidden="true">↗</span></a></div></div></section>
   </main>
-  <footer class="site-footer"><div class="container"><div class="footer-main"><div class="footer-intro"><a class="brand" href="#top" aria-label="返回零风AI首页"><img src="./assets/logo.jpg" alt="" width="42" height="42" /><span>零风<span class="brand-ai">AI</span></span></a><p>风过之后，是温度。</p></div><div class="footer-links"><section class="footer-column"><h2>开始</h2><a href="#top">初次相识</a><a href="#preview">慢慢相知</a></section><section class="footer-column"><h2>了解</h2><a href="#screens">相伴日常</a><a href="#faq">从此启程</a></section><section class="footer-column"><h2>条款与数据</h2><a href="./privacy/index.html">隐私政策</a><a href="./terms/index.html">用户协议</a></section><section class="footer-column"><h2>获取应用</h2><a href="#download">下载公测版</a></section></div><a class="back-top" href="#top" aria-label="返回顶部">↑</a></div><div class="footer-bottom"><span>© 2026 零风AI科技团队</span><div><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2026048238号-1</a><a href="https://beian.mps.gov.cn/#/query/webSearch?code=51012202002602" target="_blank" rel="noopener noreferrer">川公网安备51012202002602号</a></div></div></div></footer>
+  <footer class="site-footer"><div class="container"><div class="footer-main"><div class="footer-intro"><a class="brand" href="#top" aria-label="返回零风AI首页"><img src="./assets/logo.jpg" alt="" width="42" height="42" /><span>零风<span class="brand-ai">AI</span></span></a><p>风过之后，是温度。</p></div><div class="footer-links"><section class="footer-column"><h2>开始</h2><a href="#top">初次相识</a><a href="#preview">慢慢相知</a></section><section class="footer-column"><h2>了解</h2><a href="#screens">相伴日常</a><a href="#faq">从此启程</a></section><section class="footer-column"><h2>条款与数据</h2><a href="./privacy/index.html">隐私政策</a><a href="./terms/index.html">用户协议</a></section><section class="footer-column"><h2>获取应用</h2><a href="#download">下载公测版</a></section><section class="footer-column footer-community"><h2>社群</h2><span class="community-value">QQ群 798253867</span><small>进群和大家一起讨论吧</small></section></div><a class="back-top" href="#top" aria-label="返回顶部">↑</a></div><div class="footer-bottom"><span>© 2026 零风AI科技团队</span><div><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2026048238号-1</a><a href="https://beian.mps.gov.cn/#/query/webSearch?code=51012202002602" target="_blank" rel="noopener noreferrer">川公网安备51012202002602号</a></div></div></div></footer>
   <div class="mobile-action-bar" aria-label="快捷下载"><span>零风 AI<small>有回音的陪伴</small></span><a class="button button-small" href="#download">下载公测版 <span aria-hidden="true">↓</span></a></div>
+  <aside class="floating-community" id="floatingCommunity" aria-label="零风 AI 交流群">
+    <label for="communityGroupNumber">QQ群</label>
+    <input id="communityGroupNumber" type="text" value="798253867" readonly />
+    <button type="button" id="copyCommunityGroup" aria-label="复制QQ群号" hidden>复制</button>
+    <span class="sr-only" id="communityGroupStatus" role="status"></span>
+  </aside>
   <dialog class="poster-viewer" id="posterViewer" aria-label="角色广场大图">
     <div class="poster-viewer-toolbar"><span>零风 · 角色广场</span><div><button type="button" id="posterZoom" aria-pressed="false" aria-controls="posterCanvas">放大细节 <span aria-hidden="true">＋</span></button><button type="button" id="posterClose" autofocus>关闭 <span aria-hidden="true">×</span></button></div></div>
-    <div class="poster-viewer-canvas" id="posterCanvas" tabindex="0" aria-label="陪伴日常展示图，可滚动查看"><img src="./assets/companionship-roles.webp" alt="你想遇见怎样的 TA？不同性格的角色与角色广场展示" width="720" height="1280" loading="lazy" /></div>
+    <div class="poster-viewer-canvas" id="posterCanvas" tabindex="0" aria-label="陪伴日常展示图，可滚动查看"><img src="./assets/companionship-roles-new.webp" alt="你想遇见怎样的 TA？不同性格的角色与角色广场展示" width="720" height="1280" loading="lazy" /></div>
   </dialog>
 </body>
 </html>

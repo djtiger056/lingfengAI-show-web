@@ -7,7 +7,7 @@
   <title>零风AI · 手机交互预览</title>
   <link rel="icon" href="../../assets/logo.jpg" />
   <link rel="stylesheet" href="./phone.css" />
-  <script src="./phone.js" defer></script>
+  <script src="./phone.js?v=role-direct-20261123" defer></script>
 </head>
 <body>
   <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -30,14 +30,14 @@
         <div class="phone-screen">
           <div class="phone-base">
             <div class="device-status" aria-label="模拟手机状态栏"><time>23:49</time><span class="dynamic-island" aria-hidden="true"></span><div class="status-icons" aria-hidden="true"><svg viewBox="0 0 20 14"><path d="M1 13h2V9H1zm5 0h2V6H6zm5 0h2V3h-2zm5 0h2V0h-2z" /></svg><svg viewBox="0 0 20 14"><path d="M1 4a14 14 0 0 1 18 0M4 7a9 9 0 0 1 12 0M7 10a4.5 4.5 0 0 1 6 0" /><circle cx="10" cy="13" r="1" /></svg><span class="battery"></span></div></div>
-            <header class="chat-header"><img id="roleAvatar" src="../../assets/avatars/shen-yu.webp" alt="沈屿的角色头像" width="44" height="44" /><div class="chat-person"><strong id="roleName">沈屿</strong><span id="chatStatus">在线 · 陪你聊会儿</span></div><button type="button" id="memoryButton" class="presence-chip" aria-haspopup="dialog">关于你的记忆</button><button type="button" id="moreButton" class="icon-button more-button" aria-label="更多演示功能与角色切换" aria-haspopup="dialog">···</button></header>
+            <header class="chat-header"><button type="button" id="roleAvatarButton" class="role-avatar-button" aria-label="切换角色，当前为林莹莹" title="点击头像切换角色"><img id="roleAvatar" src="../../assets/avatars/lin-yingying.webp" alt="林莹莹的角色头像" width="44" height="44" /></button><div class="chat-person"><strong id="roleName">林莹莹</strong><span id="chatStatus">在线 · 陪你聊会儿</span></div><button type="button" id="memoryButton" class="presence-chip" aria-haspopup="dialog">关于你的记忆</button><button type="button" id="moreButton" class="icon-button more-button" aria-label="更多演示功能与角色切换" aria-haspopup="dialog">···</button></header>
             <div class="chat-scroll" id="chatScroll" tabindex="0" role="log" aria-label="预设聊天消息" aria-live="off">
               <div class="chat-day"><span>今天 · 对话示例</span></div>
               <div id="messages">
-                <article class="bubble bubble-me"><p>终于忙完了，你在干嘛？</p><small>23:47 · 已读</small></article>
-                <article class="bubble bubble-ta"><p>我也刚忙完，给你看看我的桌面。</p><img class="sample-image sample-image--scene" src="../../assets/avatars/desk-scene.png" alt="沈屿发的桌面照片" width="160" height="180" /><small>AI 图片 · 23:48</small></article>
-                <article class="bubble bubble-me"><p>有点困，想喝杯拿铁。</p><small>23:49 · 已读</small></article>
-                <article class="bubble bubble-ta"><p>那就不加糖，记得你上次说太甜会腻。</p><audio controls preload="none" src="../../assets/coffee-voice.wav" aria-label="播放语音消息：这么晚还喝咖啡呀"></audio><small>记得你的小习惯 · 23:49</small></article>
+                <article class="bubble bubble-me"><p>今天有点累，刚到家。</p><small>23:47 · 已读</small></article>
+                <article class="bubble bubble-ta"><p>我刚拍的，陪你缓一缓。</p><img class="sample-image sample-image--scene" src="../../assets/avatars/lin-yingying.webp" alt="林莹莹发的照片" width="160" height="180" /><small>AI 图片 · 23:48</small></article>
+                <article class="bubble bubble-me"><p>这时候有杯奶茶就好了。</p><small>23:49 · 已读</small></article>
+                <article class="bubble bubble-ta"><p>少冰、三分糖，对吧？你上次说这个甜度刚刚好。先歇会儿，今天的事慢慢说，我听着。</p><audio controls preload="none" src="../../assets/lin-yingying-voice.wav" aria-label="播放语音消息：少冰、三分糖，对吧"></audio><small>记得你的小习惯 · 23:49</small></article>
               </div>
             </div>
             <div class="chat-dock">
@@ -49,8 +49,8 @@
           </div>
           <div class="sheet-overlay" id="sheetOverlay" hidden>
             <section class="feature-sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" tabindex="-1"><div class="sheet-handle" aria-hidden="true"></div><header><div><span id="sheetEyebrow">零风 AI</span><h2 id="sheetTitle">关于你的记忆</h2></div><button type="button" id="closeSheet" class="icon-button" aria-label="关闭功能面板"><svg class="icon"><use href="#icon-close" /></svg></button></header><div id="sheetContent" class="sheet-content"></div><div id="sheetTools" hidden><p class="sheet-note">切换示例角色</p>      <div class="role-picker" role="group" aria-label="选择示例角色">
-        <button type="button" data-role="0" aria-pressed="true"><img src="../../assets/avatars/shen-yu.webp" alt="" width="36" height="36" /><span>沈屿<small>男生 · 慢热</small></span></button>
-        <button type="button" data-role="1" aria-pressed="false"><img src="../../assets/avatars/lin-yingying.webp" alt="" width="36" height="36" /><span>林莹莹<small>女生 · 友善</small></span></button>
+        <button type="button" data-role="0" aria-pressed="false"><img src="../../assets/avatars/shen-yu.webp" alt="" width="36" height="36" /><span>沈屿<small>男生 · 慢热</small></span></button>
+        <button type="button" data-role="1" aria-pressed="true"><img src="../../assets/avatars/lin-yingying.webp" alt="" width="36" height="36" /><span>林莹莹<small>女生 · 友善</small></span></button>
       </div>
       <div class="playback-controls"><button id="replayButton" type="button">重播对话 <span aria-hidden="true">↻</span></button><button id="resetButton" type="button">重置</button></div>
 </div></section>

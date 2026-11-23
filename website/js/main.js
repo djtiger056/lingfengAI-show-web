@@ -29,6 +29,25 @@
   });
   mobile.addEventListener('change', () => setMenu(false));
 
+  const community = document.getElementById('floatingCommunity');
+  if (community) {
+    const groupNumber = document.getElementById('communityGroupNumber');
+    const copyGroup = document.getElementById('copyCommunityGroup');
+    const groupStatus = document.getElementById('communityGroupStatus');
+    copyGroup.hidden = false;
+    copyGroup.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(groupNumber.value);
+        copyGroup.textContent = '已复制';
+        groupStatus.textContent = '群号已复制，打开 QQ 搜索即可申请加入。';
+      } catch {
+        groupNumber.focus();
+        groupNumber.select();
+        groupStatus.textContent = '已选中群号，可手动复制。';
+      }
+    });
+  }
+
   const voiceButton = document.getElementById('dailyVoiceButton');
   const voiceAudio = document.getElementById('dailyVoiceAudio');
   const voiceStatus = document.getElementById('dailyVoiceStatus');
@@ -66,6 +85,48 @@
   const phoneViewport = document.querySelector('.hero-phone-viewport');
   const phoneNote = document.querySelector('.hero-phone-note');
   const siteNav = document.querySelector('.site-nav');
+  const heroRoleToggle = document.getElementById('heroRoleToggle');
+  const heroRoleImage = heroRoleToggle?.querySelector('img');
+  const heroRoleCaption = document.querySelector('.hero-stage-caption');
+  const heroRoleButtons = [...document.querySelectorAll('[data-hero-role]')];
+  const heroPhoneFrame = document.querySelector('.hero-phone-frame');
+  const heroRoles = [
+    { name: '沈屿', image: './assets/avatars/shen-yu.webp', quote: '「好久不见。」' },
+    { name: '林莹莹', image: './assets/avatars/lin-yingying.webp', quote: '「今天有点累，刚到家。」' }
+  ];
+  let heroRoleIndex = 1;
+  // file:// pages have an opaque "null" origin, so they need the wildcard target.
+  const messageTargetOrigin = location.origin === 'null' ? '*' : location.origin;
+  function syncHeroRoleToFrame() {
+    const frame = heroPhoneFrame?.contentWindow;
+    if (!frame) return;
+    if (typeof frame.selectDemoRole === 'function') {
+      frame.selectDemoRole(heroRoleIndex);
+      return;
+    }
+    frame.postMessage({ type: 'select-role', index: heroRoleIndex }, messageTargetOrigin);
+  }
+  function setHeroRole(index, syncFrame = true) {
+    const role = heroRoles[index];
+    if (!role || !heroRoleToggle || !heroRoleImage || !heroRoleCaption) return;
+    heroRoleIndex = index;
+    heroRoleImage.src = role.image;
+    heroRoleImage.alt = '零风AI 角色 ' + role.name;
+    heroRoleToggle.setAttribute('aria-label', '切换角色，当前为' + role.name);
+    heroRoleCaption.querySelector('span').textContent = '官方角色 · ' + role.name;
+    heroRoleCaption.querySelector('strong').textContent = role.quote;
+    heroRoleButtons.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.heroRole) === index)));
+    if (syncFrame) syncHeroRoleToFrame();
+  }
+  heroRoleToggle?.addEventListener('click', () => setHeroRole((heroRoleIndex + 1) % heroRoles.length));
+  heroRoleButtons.forEach(button => button.addEventListener('click', () => setHeroRole(Number(button.dataset.heroRole))));
+  heroPhoneFrame?.addEventListener('load', syncHeroRoleToFrame);
+  window.addEventListener('message', event => {
+    if ((location.origin !== 'null' && event.origin !== location.origin) || event.source !== heroPhoneFrame?.contentWindow) return;
+    if (event.data?.type !== 'role-changed') return;
+    setHeroRole(Number(event.data.index), false);
+  });
+  setHeroRole(heroRoleIndex, false);
   function fitHeroPhone() {
     if (mobile.matches) {
       phoneViewport.style.removeProperty('--phone-scale');

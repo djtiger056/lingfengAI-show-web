@@ -9,18 +9,22 @@
       opening: '终于忙完了，你在干嘛？', photo: '我也刚忙完，给你看看我的桌面。', followup: '有点困，想喝杯拿铁。',
       voice: '这么晚还喝咖啡呀？那就不加糖，记得你上次说太甜会腻。先坐一会儿吧，我陪你聊聊。',
       recall: '那就不加糖，记得你上次说太甜会腻。', source: '上次聊天 · 说起喜欢的咖啡' },
-    { name: '林莹莹', image: 'lin-yingying.webp', duration: 10, memory: '喜欢少冰、三分糖的奶茶',
+    { name: '林莹莹', image: 'lin-yingying.webp', audio: '../../assets/lin-yingying-voice.wav', duration: 8, memory: '喜欢少冰、三分糖的奶茶',
       opening: '今天有点累，刚到家。', photo: '我刚拍的，陪你缓一缓。', followup: '这时候有杯奶茶就好了。',
       voice: '少冰、三分糖，对吧？你上次说这个甜度刚刚好。先歇会儿，今天的事慢慢说，我听着。',
       recall: '少冰、三分糖，对吧？你上次说刚刚好。', source: '上次聊天 · 说起喜欢的奶茶' }
   ];
   const states = roles.map((_, index) => createState(index));
   const replyTimers = new Map();
-  let roleIndex = 0, replayTimer = null, replayCursor = null, replayPaused = false;
+  const requestedRole = Number(new URLSearchParams(location.search).get('role'));
+  let roleIndex = Number.isInteger(requestedRole) && roles[requestedRole] ? requestedRole : 1;
+  let replayTimer = null, replayCursor = null, replayPaused = false;
   let toastTimer = null, returnFocus = null;
   let activeAudio = null;
   const messages = $('#messages'), scroll = $('#chatScroll'), input = $('#messageInput');
   const overlay = $('#sheetOverlay'), sheet = $('.feature-sheet');
+  // file:// previews use an opaque origin, so the parent message target is '*'.
+  const messageTargetOrigin = location.origin === 'null' ? '*' : location.origin;
 
   function createState(index) {
     const selected = roles[index];
@@ -294,6 +298,7 @@
     $('#closeSheet').focus({ preventScroll: true });
   }
   function selectRole(index) {
+    if (!roles[index]) return;
     stopReplay(false);
     current().draft = input.value;
     roleIndex = index;
@@ -301,11 +306,18 @@
     $('#roleName').textContent = roles[index].name;
     $('#roleAvatar').src = '../../assets/avatars/' + roles[index].image;
     $('#roleAvatar').alt = roles[index].name + '的角色头像';
+    $('#roleAvatarButton').setAttribute('aria-label', '切换角色，当前为' + roles[index].name);
     document.querySelectorAll('[data-role]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.role) === index)));
     renderChat(); scroll.scrollTop = 0;
     if (!reduced.matches && current().messages.length === 4 && !current().pending) startReplay();
     announce('当前角色：' + roles[index].name);
+    if (window.parent !== window) window.parent.postMessage({ type: 'role-changed', index }, messageTargetOrigin);
   }
+  window.selectDemoRole = selectRole;
+  window.addEventListener('message', event => {
+    if ((location.origin !== 'null' && event.origin !== location.origin) || event.source !== window.parent) return;
+    if (event.data?.type === 'select-role') selectRole(Number(event.data.index));
+  });
   document.addEventListener('click', event => {
     const role = event.target.closest('[data-role]');
     if (role) { closeSheet(); selectRole(Number(role.dataset.role)); return; }
@@ -335,6 +347,7 @@
   });
   $('#toolsButton').addEventListener('click', () => openSheet('tools'));
   $('#moreButton').addEventListener('click', () => openSheet('tools'));
+  $('#roleAvatarButton').addEventListener('click', () => selectRole((roleIndex + 1) % roles.length));
   $('#memoryButton').addEventListener('click', () => openSheet('memory'));
   $('#closeSheet').addEventListener('click', closeSheet);
   overlay.addEventListener('click', event => { if (event.target === overlay) closeSheet(); });

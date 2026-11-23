@@ -49,7 +49,10 @@ a { color: inherit; text-decoration: none; }
 .battery::before { content: ""; display: block; background: #70839a; height: 100%; border-radius: 1px; width: 85%; }
 .battery::after { content: ""; position: absolute; right: -3px; width: 1.5px; top: 2px; height: 3px; background: #70839a; border-radius: 1px; }
 .chat-header { display: flex; align-items: center; gap: 9px; padding: 12px 14px 16px; background: #ffffff67; border-bottom: 1px solid #d9eaf56b; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); flex-shrink: 0; }
-.chat-header > img { width: 44px; height: 44px; object-position: center 22%; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 4px 10px #5c729a12; }
+.role-avatar-button { width: 48px; height: 48px; padding: 0; background: transparent; border-radius: 50%; flex-shrink: 0; }
+.role-avatar-button > img { width: 44px; height: 44px; object-position: center 22%; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 4px 10px #5c729a12; transition: transform .2s, box-shadow .2s; }
+.role-avatar-button:hover > img { transform: scale(1.06); box-shadow: 0 6px 14px #5c729a22; }
+.role-avatar-button:focus-visible { outline: 3px solid #2582ab; outline-offset: 2px; }
 .chat-person { flex: 1; min-width: 0; }
 .chat-person strong { font: 600 19px/1.6 var(--serif); display: block; }
 .chat-person > span { font-size: 11px; color: #60728e; display: block; letter-spacing: .015em; }
@@ -191,7 +194,8 @@ button.voice-player:hover { background: #eef4f8; }
   .status-icons { gap: 3px; }
   .status-icons svg { width: 11px; }
   .chat-header { gap: 6px; padding: 10px 12px 14px; }
-  .chat-header > img { width: 37px; height: 37px; }
+  .role-avatar-button { width: 41px; height: 41px; }
+  .role-avatar-button > img { width: 37px; height: 37px; }
   .presence-chip { font-size: 9px; padding-inline: 7px; }
   .chat-person strong { font-size: 16px; }
   .chat-person > span { font-size: 8px; white-space: nowrap; }
@@ -215,7 +219,8 @@ button.voice-player:hover { background: #eef4f8; }
   .is-embedded .device-status { height: 38px; padding-inline: 14px; font-size: 12px; }
   .is-embedded .dynamic-island { width: 82px; height: 24px; }
   .is-embedded .chat-header { gap: 6px; padding: 8px 10px; background: #f7faf5; backdrop-filter: none; -webkit-backdrop-filter: none; }
-  .is-embedded .chat-header > img { width: 34px; height: 34px; }
+  .is-embedded .role-avatar-button { width: 38px; height: 38px; }
+  .is-embedded .role-avatar-button > img { width: 34px; height: 34px; }
   .is-embedded .chat-person strong { font-size: 16px; }
   .is-embedded .chat-person > span { font-size: 12px; color: #526158; }
   .is-embedded .presence-chip { font-size: 12px; padding: 8px 6px; color: #37543e; }
@@ -246,4 +251,21 @@ button.voice-player:hover { background: #eef4f8; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .is-embedded *,
+  .is-embedded *::before,
+  .is-embedded *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .is-embedded .chat-header,
+  .is-embedded .chat-dock,
+  .is-embedded .sheet-overlay,
+  .is-embedded .feature-sheet,
+  .is-embedded .phone-toast {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
