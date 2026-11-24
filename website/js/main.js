@@ -51,30 +51,55 @@
   const voiceButton = document.getElementById('dailyVoiceButton');
   const voiceAudio = document.getElementById('dailyVoiceAudio');
   const voiceStatus = document.getElementById('dailyVoiceStatus');
-  const voiceProgress = voiceButton.querySelector('.voice-audio-progress');
   const voiceButtonText = voiceButton.querySelector('.voice-audio-label');
+  const voiceDuration = voiceButton.querySelector('.voice-audio-duration');
   const voiceLabel = '语音：今天过得怎么样？有发生什么有趣的事吗？';
+  let voiceLoading = false;
+  let voiceFailed = false;
+  function voiceTime(seconds) {
+    const value = Math.max(0, Math.floor(seconds));
+    return Math.floor(value / 60) + ':' + String(value % 60).padStart(2, '0');
+  }
+  function updateVoiceProgress() {
+    const duration = Number.isFinite(voiceAudio.duration) && voiceAudio.duration > 0 ? voiceAudio.duration : 0;
+    const fraction = duration ? Math.min(1, voiceAudio.currentTime / duration) : 0;
+    voiceButton.style.setProperty('--voice-progress', (fraction * 100).toFixed(2) + '%');
+    const total = duration ? Math.ceil(duration) : 4;
+    voiceDuration.textContent = voiceTime(voiceAudio.ended ? total : voiceAudio.currentTime) + ' / ' + voiceTime(total);
+  }
   function updateVoice() {
     const playing = !voiceAudio.paused && !voiceAudio.ended;
     voiceButton.setAttribute('aria-pressed', String(playing));
     voiceButton.setAttribute('aria-label', (playing ? '暂停' : '播放') + voiceLabel);
-    voiceButtonText.textContent = playing ? '暂停语音' : '播放语音';
-    voiceStatus.textContent = playing ? '正在播放 · 再点一次暂停' : '点击播放，听听 Ta 的问候。';
+    voiceButton.setAttribute('aria-busy', String(voiceLoading));
+    voiceButtonText.textContent = voiceFailed ? '重新播放' : voiceLoading ? '正在加载…' : playing ? '暂停语音' : voiceAudio.ended ? '再听一次' : voiceAudio.currentTime > 0 ? '继续播放' : '播放语音';
+    voiceStatus.textContent = voiceFailed ? '暂时无法播放，请点击重试。' : voiceLoading ? '正在加载这声问候…' : playing ? '正在播放 · 点击可暂停' : voiceAudio.ended ? '听完了，再听一次也很温暖。' : voiceAudio.currentTime > 0 ? '已暂停，点击继续听。' : '点击播放，听听 Ta 的声音。';
+    updateVoiceProgress();
+  }
+  function voicePlaybackError() {
+    voiceLoading = false;
+    voiceFailed = true;
+    updateVoice();
   }
   voiceButton.addEventListener('click', () => {
-    if (!voiceAudio.paused) { voiceAudio.pause(); return; }
+    if (!voiceAudio.paused) { voiceLoading = false; voiceAudio.pause(); return; }
+    voiceFailed = false;
     if (voiceAudio.ended) voiceAudio.currentTime = 0;
+    if (voiceAudio.error) voiceAudio.load();
+    voiceLoading = true;
+    updateVoice();
     voiceAudio.play().catch(error => {
       if (error.name === 'AbortError') return;
-      updateVoice();
-      voiceStatus.textContent = '暂时无法播放，点击重试。';
+      voicePlaybackError();
     });
   });
-  ['play', 'pause', 'ended'].forEach(event => voiceAudio.addEventListener(event, updateVoice));
-  voiceAudio.addEventListener('timeupdate', () => {
-    const fraction = Number.isFinite(voiceAudio.duration) && voiceAudio.duration > 0 ? voiceAudio.currentTime / voiceAudio.duration : 0;
-    voiceProgress.style.transform = `scaleX(${fraction})`;
-  });
+  ['playing', 'pause', 'ended'].forEach(event => voiceAudio.addEventListener(event, () => {
+    voiceLoading = false;
+    updateVoice();
+  }));
+  voiceAudio.addEventListener('waiting', () => { voiceLoading = true; updateVoice(); });
+  voiceAudio.addEventListener('error', voicePlaybackError);
+  ['timeupdate', 'loadedmetadata'].forEach(event => voiceAudio.addEventListener(event, updateVoiceProgress));
   document.addEventListener('visibilitychange', () => { if (document.hidden) voiceAudio.pause(); });
   window.addEventListener('pagehide', () => voiceAudio.pause());
 
