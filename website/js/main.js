@@ -31,20 +31,25 @@
 
   const community = document.getElementById('floatingCommunity');
   if (community) {
-    const groupNumber = document.getElementById('communityGroupNumber');
-    const copyGroup = document.getElementById('copyCommunityGroup');
     const groupStatus = document.getElementById('communityGroupStatus');
-    copyGroup.hidden = false;
-    copyGroup.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(groupNumber.value);
-        copyGroup.textContent = '已复制';
-        groupStatus.textContent = '群号已复制，打开 QQ 搜索即可申请加入。';
-      } catch {
-        groupNumber.focus();
-        groupNumber.select();
-        groupStatus.textContent = '已选中群号，可手动复制。';
-      }
+    [
+      ['communityGroupNumber', 'copyCommunityGroup', '群号', '群号已复制，打开 QQ 搜索即可申请加入。'],
+      ['communityWechatNumber', 'copyCommunityWechat', '微信号', '微信号已复制，打开微信搜索即可添加好友。'],
+    ].forEach(([inputId, buttonId, label, successMessage]) => {
+      const number = document.getElementById(inputId);
+      const copyButton = document.getElementById(buttonId);
+      copyButton.hidden = false;
+      copyButton.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(number.value);
+          copyButton.textContent = '已复制';
+          groupStatus.textContent = successMessage;
+        } catch {
+          number.focus();
+          number.select();
+          groupStatus.textContent = `已选中${label}，可手动复制。`;
+        }
+      });
     });
   }
 
